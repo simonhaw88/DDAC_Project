@@ -1,0 +1,37 @@
+﻿@model DDAC_Project.Models.User
+@{
+}
+<div class="container border border-2">
+    <div class="d-flex p-3 m-4 justify-content-between md-2">
+        <label class="label fs-3 fw-bold">
+            Login
+        </label>
+    </div>
+</div>
+<div class="container-xl mt-5 ps-3 pe-3">
+    @using (Html.BeginForm("Login", "Auth", FormMethod.Post))
+    {
+        <form>
+            <div class="form-group">
+                @Html.Label("Email")
+                @Html.TextBoxFor(m => m.Email,"", new {@class="form-control", @placeholder= "Enter email" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+
+            </div>
+            <div class="form-group">
+                @Html.Label("Password")
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.Label("Role")
+                @Html.DropDownListFor(model => model.Role, new SelectList(Enum.GetValues(typeof(UserEnum)).OfType<UserEnum>().Select(
+                m => new { Text = m.ToString(), Value = (int)m }).ToList(), "Value", "Text"), "Select Role", new { @class = "form-control form-control-sm" })
+                @Html.ValidationMessageFor(m => m.Role, "", new { @class = "text-danger" })
+                @Html.ValidationMessage("Global", new { @class = "text-danger" })
+
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    }
+</div>

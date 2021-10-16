@@ -1,0 +1,267 @@
+﻿@model IEnumerable<DDAC_Project.Models.Author>
+@using Microsoft.AspNetCore.Http
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="d-flex justify-content-center">
+     <div class="col col-8 mt-3">
+<div class="input-group mb-3">
+         <input type="text" class="form-control" placeholder="Search for music album">
+         <button type="button" class="btn btn-primary"><i class="fas fa-search"></i></button>
+    </div>
+</div>
+</div>
+
+<div class="container">
+    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <section class="pt-4 pb-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-6">
+                        <h3 class="mb-3">Featured Musics </h3>
+                    </div>
+                    <div class="col-6 text-end">
+                        <a class="btn btn-primary mb-3 mr-1" href="#carouselExampleIndicators2" role="button" data-slide="prev">
+                            <i class="fa fa-arrow-left"></i>
+                        </a>
+                        <a class="btn btn-primary mb-3 " href="#carouselExampleIndicators2" role="button" data-slide="next">
+                            <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="col-12">
+                        <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
+
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <div class="row">
+                                        <div class="col-md-4 mb-3">
+                                            <div class="card" style="height:530px;">
+                                                <img class="img-fluid" alt="100%x280" src="https://hawcheawee.s3.amazonaws.com/original.jpeg">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">MICHAEL, GEORGE - LISTEN WITHOUT.. [2 Discs]</h5>
+                                                    <h6 class="card-text text-muted">Pop</h6>
+                                                    <h4 class="card-text text-success">RM12.00</h4>
+                                                    <a href="" class="stretched-link"></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="card" style="height:530px;">
+                                                <img class="img-fluid" alt="100%x280" src="https://hawcheawee.s3.amazonaws.com/original.jpeg">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">MICHAEL, GEORGE - LISTEN WITHOUT.. [2 Discs]</h5>
+                                                    <h6 class="card-text text-muted">Pop</h6>
+                                                    <h4 class="card-text text-success">RM12.00</h4>
+                                                    <a href="" class="stretched-link"></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="card" style="height:530px;">
+                                                <img class="img-fluid" alt="100%x280" src="https://hawcheawee.s3.amazonaws.com/original.jpeg">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">MICHAEL, GEORGE - LISTEN WITHOUT.. [2 Discs]</h5>
+                                                    <h6 class="card-text text-muted">Pop</h6>
+                                                    <h4 class="card-text text-success">RM12.00</h4>
+                                                    <a href="" class="stretched-link"></a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="carousel-item">
+                                    <div class="row">
+
+                                        <div class="col-md-4 mb-3">
+                                            <div class="card" style="height:530px;">
+                                                <img class="img-fluid" alt="100%x280" src="https://hawcheawee.s3.amazonaws.com/original.jpeg">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">MICHAEL, GEORGE - LISTEN WITHOUT.. [2 Discs]</h5>
+                                                    <h6 class="card-text text-muted">Pop</h6>
+                                                    <h4 class="card-text text-success">RM12.00</h4>
+                                                    <a href="" class="stretched-link"></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="card" style="height:530px;">
+                                                <img class="img-fluid" alt="100%x280" src="https://hawcheawee.s3.amazonaws.com/original.jpeg">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">MICHAEL, GEORGE - LISTEN WITHOUT.. [2 Discs]</h5>
+                                                    <h6 class="card-text text-muted">Pop</h6>
+                                                    <h4 class="card-text text-success">RM12.00</h4>
+                                                    <a href="" class="stretched-link"></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="card" style="height:530px;">
+                                                <img class="img-fluid" alt="100%x280" src="https://hawcheawee.s3.amazonaws.com/original.jpeg">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">MICHAEL, GEORGE - LISTEN WITHOUT.. [2 Discs]</h5>
+                                                    <h6 class="card-text text-muted">Pop</h6>
+                                                    <h4 class="card-text text-success">RM12.00</h4>
+                                                    <a href="" class="stretched-link"></a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="carousel-item">
+                                    <div class="row">
+
+                                        <div class="col-md-4 mb-3">
+                                            <div class="card" style="height:530px;">
+                                                <img class="img-fluid" alt="100%x280" src="https://hawcheawee.s3.amazonaws.com/original.jpeg">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">MICHAEL, GEORGE - LISTEN WITHOUT.. [2 Discs]</h5>
+                                                    <h6 class="card-text text-muted">Pop</h6>
+                                                    <h4 class="card-text text-success">RM12.00</h4>
+                                                    <a href="" class="stretched-link"></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="card" style="height:530px;">
+                                                <img class="img-fluid" alt="100%x280" src="https://hawcheawee.s3.amazonaws.com/original.jpeg">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">MICHAEL, GEORGE - LISTEN WITHOUT.. [2 Discs]</h5>
+                                                    <h6 class="card-text text-muted">Pop</h6>
+                                                    <h4 class="card-text text-success">RM12.00</h4>
+                                                    <a href="" class="stretched-link"></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="card" style="height:530px;">
+                                                <img class="img-fluid" alt="100%x280" src="https://hawcheawee.s3.amazonaws.com/original.jpeg">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">MICHAEL, GEORGE - LISTEN WITHOUT.. [2 Discs]</h5>
+                                                    <h6 class="card-text text-muted">Pop</h6>
+                                                    <h4 class="card-text text-success">RM12.00</h4>
+                                                    <a href="" class="stretched-link"></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="pt-4 pb-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-6">
+                        <h3 class="mb-3">All Musics </h3>
+                    </div>
+                    <div class="col-6 pt-1">
+                        <select class="custom-select float-end" id="inputGroupSelect01">
+                            <option selected>Select Category...</option>
+                            <option value="1">Pop</option>
+                            <option value="2">R&B</option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <div class="card" style="height:530px;">
+                                            <img class="img-fluid" alt="100%x280" src="https://hawcheawee.s3.amazonaws.com/original.jpeg">
+                                            <div class="card-body">
+                                                <h5 class="card-title">MICHAEL, GEORGE - LISTEN WITHOUT.. [2 Discs]</h5>
+                                                <h6 class="card-text text-muted">Pop</h6>
+                                                <h4 class="card-text text-success">RM12.00</h4>
+                                                <a href="" class="stretched-link"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="card" style="height:530px;">
+                                            <img class="img-fluid" alt="100%x280" src="https://hawcheawee.s3.amazonaws.com/original.jpeg">
+                                            <div class="card-body">
+                                                <h5 class="card-title">MICHAEL, GEORGE - LISTEN WITHOUT.. [2 Discs]</h5>
+                                                <h6 class="card-text text-muted">Pop</h6>
+                                                <h4 class="card-text text-success">RM12.00</h4>
+                                                <a href="" class="stretched-link"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="card" style="height:530px;">
+                                            <img class="img-fluid" alt="100%x280" src="https://hawcheawee.s3.amazonaws.com/original.jpeg">
+                                            <div class="card-body">
+                                                <h5 class="card-title">MICHAEL, GEORGE - LISTEN WITHOUT.. [2 Discs]</h5>
+                                                <h6 class="card-text text-muted">Pop</h6>
+                                                <h4 class="card-text text-success">RM12.00</h4>
+                                                <a href="" class="stretched-link"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                          
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <div class="card" style="height:530px;">
+                                            <img class="img-fluid" alt="100%x280" src="https://hawcheawee.s3.amazonaws.com/original.jpeg">
+                                            <div class="card-body">
+                                                <h5 class="card-title">MICHAEL, GEORGE - LISTEN WITHOUT.. [2 Discs]</h5>
+                                                <h6 class="card-text text-muted">Pop</h6>
+                                                <h4 class="card-text text-success">RM12.00</h4>
+                                                <a href="" class="stretched-link"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="card" style="height:530px;">
+                                            <img class="img-fluid" alt="100%x280" src="https://hawcheawee.s3.amazonaws.com/original.jpeg">
+                                            <div class="card-body">
+                                                <h5 class="card-title">MICHAEL, GEORGE - LISTEN WITHOUT.. [2 Discs]</h5>
+                                                <h6 class="card-text text-muted">Pop</h6>
+                                                <h4 class="card-text text-success">RM12.00</h4>
+                                                <a href="" class="stretched-link"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="card" style="height:530px;">
+                                            <img class="img-fluid" alt="100%x280" src="https://hawcheawee.s3.amazonaws.com/original.jpeg">
+                                            <div class="card-body">
+                                                <h5 class="card-title">MICHAEL, GEORGE - LISTEN WITHOUT.. [2 Discs]</h5>
+                                                <h6 class="card-text text-muted">Pop</h6>
+                                                <h4 class="card-text text-success">RM12.00</h4>
+                                                <a href="" class="stretched-link"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+    
+    

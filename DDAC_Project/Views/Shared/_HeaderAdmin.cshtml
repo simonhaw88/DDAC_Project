@@ -1,0 +1,37 @@
+﻿@using Microsoft.AspNetCore.Http
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light border border-2 bg-blue" style='position:sticky;top:0;z-index:100;'>
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DDAC_Project (Admin)</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="ms-3 navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item p-2 ">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Home</a>
+                    </li>
+                    <li class="nav-item p-2 ">
+
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Album
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" asp-area="" asp-controller="Album" asp-action="Create">Create New Album</a>
+
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+                @if (Context.Session.GetInt32("userId") != null)
+                {
+                <a class="btn btn-outline-danger" asp-controller="Home" asp-action="Logout">Logout</a>
+                }
+
+            </div>
+        </div>
+    </nav>
+</header>

@@ -1,0 +1,16 @@
+﻿@model DDAC_Project.Models.FileUploadFormModal
+@{
+}
+
+<form enctype="multipart/form-data" method="post">
+    <dl>
+        <dt>
+            <label asp-for="@Model.FormFile"></label>
+        </dt>
+        <dd>
+            <input asp-for="@Model.FormFile" type="file">
+        </dd>
+    </dl>            @Html.ValidationMessage("Global", new { @class = "text-danger" })
+
+    <input asp-page-handler="Upload" class="btn" type="submit" value="Upload">
+</form>
