@@ -21,8 +21,8 @@ namespace DDAC_API.Controllers
 
         }
         
-        [HttpPost]
-        public async Task<IActionResult> Post()
+        [HttpPost("{folder}")]
+        public async Task<IActionResult> Post(string folder)
         {
             PutObjectResponse result = null;
             var content = Request.Form.Files;
@@ -30,7 +30,7 @@ namespace DDAC_API.Controllers
             {
                 var putRequest = new PutObjectRequest()
                 {
-                    BucketName = bucketName,
+                    BucketName = bucketName + "/" + folder,
                     Key = file.FileName,
                     InputStream = file.OpenReadStream(),
                     ContentType = file.ContentType,

@@ -90,7 +90,7 @@ namespace DDAC_API.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AlbumCategoryId")
+                    b.Property<int>("AlbumCategory")
                         .HasColumnType("int");
 
                     b.Property<int?>("ArtistId")
@@ -111,9 +111,10 @@ namespace DDAC_API.Migrations
                     b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("AlbumId");
+                    b.Property<int>("Stock")
+                        .HasColumnType("int");
 
-                    b.HasIndex("AlbumCategoryId");
+                    b.HasKey("AlbumId");
 
                     b.HasIndex("ArtistId");
 
@@ -142,7 +143,7 @@ namespace DDAC_API.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AlbumId")
+                    b.Property<int>("AlbumId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -339,15 +340,9 @@ namespace DDAC_API.Migrations
 
             modelBuilder.Entity("DDAC_API.Models.Album", b =>
                 {
-                    b.HasOne("DDAC_API.Models.AlbumCategory", "AlbumCategory")
-                        .WithMany()
-                        .HasForeignKey("AlbumCategoryId");
-
                     b.HasOne("DDAC_API.Models.Artist", "Artist")
                         .WithMany()
                         .HasForeignKey("ArtistId");
-
-                    b.Navigation("AlbumCategory");
 
                     b.Navigation("Artist");
                 });
@@ -356,7 +351,9 @@ namespace DDAC_API.Migrations
                 {
                     b.HasOne("DDAC_API.Models.Album", "Album")
                         .WithMany()
-                        .HasForeignKey("AlbumId");
+                        .HasForeignKey("AlbumId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Album");
                 });

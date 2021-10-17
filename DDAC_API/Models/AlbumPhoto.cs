@@ -9,6 +9,8 @@ namespace DDAC_API.Models
     {
         public int AlbumPhotoId { get; set; }
         public string Name { get; set; }
+
+        public int AlbumId { get; set; }
         public Album Album { get; set; }
     }
 }

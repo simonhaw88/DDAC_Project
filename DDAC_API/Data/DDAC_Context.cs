@@ -34,11 +34,10 @@ namespace DDAC_API.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
-           
 
 
         }
+
 
     }
 }

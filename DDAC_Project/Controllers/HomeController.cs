@@ -49,13 +49,16 @@ namespace DDAC_Project.Controllers
                 using (var fileStream = FileUpload.FormFile.OpenReadStream())
                 {
                     form.Add(new StreamContent(fileStream), "FileUpload.FormFile", FileUpload.FormFile.FileName);
-                    using (var response = await this.client.PostAsync("api/image", form))
+                    using (var response = await this.client.PostAsync("api/image/AlbumPhotos", form))
                     {
                         response.EnsureSuccessStatusCode();
                         apiResponse = await response.Content.ReadAsStringAsync();
                     }
                 }
-             
+            ModelState.AddModelError("Global", FileUpload.FormFile.FileName.ToString());
+           
+
+
             return View();
 
         }

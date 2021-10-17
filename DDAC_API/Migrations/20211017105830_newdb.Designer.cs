@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DDAC_API.Migrations
 {
     [DbContext(typeof(DDAC_Context))]
-    [Migration("20211016110802_jnjnj")]
-    partial class jnjnj
+    [Migration("20211017105830_newdb")]
+    partial class newdb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -92,7 +92,7 @@ namespace DDAC_API.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AlbumCategoryId")
+                    b.Property<int>("AlbumCategory")
                         .HasColumnType("int");
 
                     b.Property<int?>("ArtistId")
@@ -113,9 +113,10 @@ namespace DDAC_API.Migrations
                     b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("AlbumId");
+                    b.Property<int>("Stock")
+                        .HasColumnType("int");
 
-                    b.HasIndex("AlbumCategoryId");
+                    b.HasKey("AlbumId");
 
                     b.HasIndex("ArtistId");
 
@@ -144,7 +145,7 @@ namespace DDAC_API.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AlbumId")
+                    b.Property<int>("AlbumId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -341,15 +342,9 @@ namespace DDAC_API.Migrations
 
             modelBuilder.Entity("DDAC_API.Models.Album", b =>
                 {
-                    b.HasOne("DDAC_API.Models.AlbumCategory", "AlbumCategory")
-                        .WithMany()
-                        .HasForeignKey("AlbumCategoryId");
-
                     b.HasOne("DDAC_API.Models.Artist", "Artist")
                         .WithMany()
                         .HasForeignKey("ArtistId");
-
-                    b.Navigation("AlbumCategory");
 
                     b.Navigation("Artist");
                 });
@@ -358,7 +353,9 @@ namespace DDAC_API.Migrations
                 {
                     b.HasOne("DDAC_API.Models.Album", "Album")
                         .WithMany()
-                        .HasForeignKey("AlbumId");
+                        .HasForeignKey("AlbumId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Album");
                 });

@@ -11,9 +11,10 @@ namespace DDAC_API.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public double Price { get; set; }
+        public int Stock { get; set; }
         public string CountryOfOrigin { get; set; }
         public DateTime ReleaseDate { get; set; }
-        public AlbumCategory AlbumCategory { get; set; }
+        public int AlbumCategory { get; set; }
         public Artist Artist { get; set; }
     }
 }
