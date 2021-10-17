@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,7 +15,14 @@ namespace DDAC_API.Models
         public int Stock { get; set; }
         public string CountryOfOrigin { get; set; }
         public DateTime ReleaseDate { get; set; }
-        public int AlbumCategory { get; set; }
-        public Artist Artist { get; set; }
+        public int AlbumCategoryId { get; set; }
+
+        public AlbumCategory AlbumCategory { get; set; }
+
+        public string Artist { get; set; }
+
+        public List<Track> Tracks { get; set; }
+
+        public List<AlbumPhoto> AlbumPhotos { get; set; }
     }
 }

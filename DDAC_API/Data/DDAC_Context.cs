@@ -25,7 +25,6 @@ namespace DDAC_API.Data
         public DbSet<Author> Authors { get; set; }
         public DbSet<Book> Books { get; set; }
         public DbSet<AlbumCategory> AlbumCategorys { get; set; }
-        public DbSet<Artist> Artists { get; set; }
         public DbSet<Album> Albums { get; set; }
 
         public DbSet<AlbumPhoto> AlbumPhotos { get; set; }

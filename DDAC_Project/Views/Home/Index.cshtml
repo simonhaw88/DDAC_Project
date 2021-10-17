@@ -168,10 +168,14 @@
                     <div class="col-6 pt-1">
                         <select class="custom-select float-end" id="inputGroupSelect01">
                             <option selected>Select Category...</option>
-                            <option value="1">Pop</option>
-                            <option value="2">R&B</option>
+                            @foreach (var category in ViewBag.AlbumCategory)
+                            {
+                                <option value="@category.AlbumCategoryId">@category.Name</option>
+                            }
+
                         </select>
                     </div>
+                    
                     <div class="col-12">
                         <div class="carousel-inner">
                             <div class="carousel-item active">

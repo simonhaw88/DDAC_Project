@@ -44,7 +44,7 @@
         </div>
         <div class="form-group">
             @Html.Label("Category")
-            <select class="form-control" name="AlbumCategory">
+            <select class="form-control" name="AlbumCategoryId">
                 @if (ViewBag.AlbumCategory != null)
                 {
                     @foreach (var category in ViewBag.AlbumCategory)
@@ -53,18 +53,27 @@
                     }
                 }
             </select>
-            @Html.ValidationMessageFor(m => m.AlbumCategory, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(m => m.AlbumCategoryId, "", new { @class = "text-danger" })
         </div>
         <div class="form-group">
             @Html.Label("Artist")
-            @Html.TextBoxFor(m => m.Artist.Name, "", new { @class = "form-control", @placeholder = "Enter artist's name" })
-            @Html.ValidationMessageFor(m => m.Artist.Name, "", new { @class = "text-danger" })
+            @Html.TextBoxFor(m => m.Artist, "", new { @class = "form-control", @placeholder = "Enter artist's name" })
+            @Html.ValidationMessageFor(m => m.Artist, "", new { @class = "text-danger" })
         </div>
         <div class="form-group">
             @Html.Label("FormFile")
             <input asp-for="@Model.FormFile" class="form-control" type="file">
 
         </div>
+        <div class="row border border-2 mt-3">
+            <h3>Tracks</h3>
+        </div>
+        <div class="form-group">
+            @Html.Label("Track.Name")
+            @Html.TextBoxFor(m => m.Track.Name, "", new { @class = "form-control", @placeholder = "Enter track's name" })
+            @Html.ValidationMessageFor(m => m.Track.Name, "", new { @class = "text-danger" })
+        </div>
+
         <div class="mt-3">
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>

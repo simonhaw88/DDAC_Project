@@ -20,6 +20,14 @@ namespace DDAC_API.Controllers
         {
             _context = context;
         }
+
+        // GET: api/Albums
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Album>>> GetAlbums()
+        {
+            return await _context.Albums.Include(a => a.Artist).ToListAsync();
+        }
+
         [HttpGet]
         public async Task<ActionResult<Album>> GetAlbum(int id)
         {

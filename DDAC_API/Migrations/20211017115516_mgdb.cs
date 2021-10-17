@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DDAC_API.Migrations
 {
-    public partial class newdb : Migration
+    public partial class mgdb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -35,19 +35,6 @@ namespace DDAC_API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AlbumCategorys", x => x.AlbumCategoryId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Artists",
-                columns: table => new
-                {
-                    ArtistId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Artists", x => x.ArtistId);
                 });
 
             migrationBuilder.CreateTable(
@@ -90,18 +77,18 @@ namespace DDAC_API.Migrations
                     Stock = table.Column<int>(type: "int", nullable: false),
                     CountryOfOrigin = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AlbumCategory = table.Column<int>(type: "int", nullable: false),
-                    ArtistId = table.Column<int>(type: "int", nullable: true)
+                    AlbumCategoryId = table.Column<int>(type: "int", nullable: false),
+                    Artist = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Albums", x => x.AlbumId);
                     table.ForeignKey(
-                        name: "FK_Albums_Artists_ArtistId",
-                        column: x => x.ArtistId,
-                        principalTable: "Artists",
-                        principalColumn: "ArtistId",
-                        onDelete: ReferentialAction.Restrict);
+                        name: "FK_Albums_AlbumCategorys_AlbumCategoryId",
+                        column: x => x.AlbumCategoryId,
+                        principalTable: "AlbumCategorys",
+                        principalColumn: "AlbumCategoryId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -244,7 +231,7 @@ namespace DDAC_API.Migrations
                     TrackId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AlbumId = table.Column<int>(type: "int", nullable: true)
+                    AlbumId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -254,7 +241,7 @@ namespace DDAC_API.Migrations
                         column: x => x.AlbumId,
                         principalTable: "Albums",
                         principalColumn: "AlbumId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -273,9 +260,9 @@ namespace DDAC_API.Migrations
                 column: "AlbumId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Albums_ArtistId",
+                name: "IX_Albums_AlbumCategoryId",
                 table: "Albums",
-                column: "ArtistId");
+                column: "AlbumCategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Books_AuthorId",
@@ -314,9 +301,6 @@ namespace DDAC_API.Migrations
                 name: "Admins");
 
             migrationBuilder.DropTable(
-                name: "AlbumCategorys");
-
-            migrationBuilder.DropTable(
                 name: "AlbumPhotos");
 
             migrationBuilder.DropTable(
@@ -344,7 +328,7 @@ namespace DDAC_API.Migrations
                 name: "Albums");
 
             migrationBuilder.DropTable(
-                name: "Artists");
+                name: "AlbumCategorys");
         }
     }
 }

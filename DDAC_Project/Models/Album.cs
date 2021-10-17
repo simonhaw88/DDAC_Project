@@ -41,14 +41,17 @@ namespace DDAC_Project.Models
 
         [Required(ErrorMessage = "Album's category is required")]
         [DisplayName("Category")]
-        public int AlbumCategory { get; set; }
+        public int AlbumCategoryId { get; set; }
 
+        [Required(ErrorMessage = "Artist is required")]
         [DisplayName("Artist")]
-        public Artist Artist { get; set; }
+        public string Artist { get; set; }
 
         [Required]
         [DisplayName("File")]
         public IFormFile FormFile { get; set; }
+
+        public Track Track { get; set; }
 
         public CountryEnum CountryEnum { get; set; }
     }

@@ -64,9 +64,22 @@ namespace DDAC_Project.Controllers
         }
 
       
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-          
+            List<AlbumCategory> albumCategory = new List<AlbumCategory>();
+            HttpClient client = _api.Initial();
+            HttpResponseMessage res = await client.GetAsync("api/albumcategory");
+            if (res.IsSuccessStatusCode)
+            {
+                var result = res.Content.ReadAsStringAsync().Result;
+                albumCategory = JsonConvert.DeserializeObject<List<AlbumCategory>>(result);
+            }
+            ViewBag.AlbumCategory = albumCategory;
+            
+            
+            
+            
+            
             // List<Author> author = new List<Author>();
             // HttpClient client = _api.Initial();
             // HttpResponseMessage res = await client.GetAsync("api/authors");

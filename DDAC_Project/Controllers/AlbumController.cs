@@ -49,6 +49,7 @@ namespace DDAC_Project.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Album album)
         {
+            bool fail = false;
             HttpResponseMessage responseAlbum = await client.PostAsJsonAsync(
                                    "api/album", album);
            
@@ -59,9 +60,8 @@ namespace DDAC_Project.Controllers
             }
             else
             {
-                Album albumObj = new Album();
                 var result = responseAlbum.Content.ReadAsStringAsync().Result;
-                albumObj = JsonConvert.DeserializeObject<Album>(result);
+                Album albumObj = JsonConvert.DeserializeObject<Album>(result);
                 string photoName = albumObj.AlbumId + "_" + album.FormFile.FileName.ToString();
                 AlbumPhoto albumPhoto = new AlbumPhoto()
                 {
@@ -70,31 +70,29 @@ namespace DDAC_Project.Controllers
                 };
                 HttpResponseMessage responseAlbumPhoto = await client.PostAsJsonAsync(
                                        "api/album/albumPhoto", albumPhoto);
-               
-                    var form = new MultipartFormDataContent();
-                    using (var fileStream = album.FormFile.OpenReadStream())
+                var form = new MultipartFormDataContent();
+                using (var fileStream = album.FormFile.OpenReadStream())
+                {
+                    form.Add(new StreamContent(fileStream), "album.FormFile", photoName);
+                    using (var response = await this.client.PostAsync("api/image/AlbumPhotos", form))
                     {
-                        form.Add(new StreamContent(fileStream), "album.FormFile", photoName);
-                        using (var response = await this.client.PostAsync("api/image/AlbumPhotos", form))
+                        if (!response.IsSuccessStatusCode)
                         {
-                            if (!response.IsSuccessStatusCode)
-                            {
-                                ModelState.AddModelError("fail", await response.Content.ReadAsStringAsync());  
-                            }
+                            fail = true;
+                            ModelState.AddModelError("fail", await response.Content.ReadAsStringAsync());  
                         }
                     }
+                }
+                if (!fail)
+                {
+                    TempData["success"] = "Album is created successfully!";
+                    return RedirectToAction("Create", "Album");
+                }
                
-                TempData["success"] =  "Album is created successfully!";
-                return RedirectToAction("Create", "Album");
             }
             return View();
            
         }
-
-       
-
-
-
 
     }
 }

@@ -90,11 +90,11 @@ namespace DDAC_API.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AlbumCategory")
+                    b.Property<int>("AlbumCategoryId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ArtistId")
-                        .HasColumnType("int");
+                    b.Property<string>("Artist")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CountryOfOrigin")
                         .HasColumnType("nvarchar(max)");
@@ -116,7 +116,7 @@ namespace DDAC_API.Migrations
 
                     b.HasKey("AlbumId");
 
-                    b.HasIndex("ArtistId");
+                    b.HasIndex("AlbumCategoryId");
 
                     b.ToTable("Albums");
                 });
@@ -154,21 +154,6 @@ namespace DDAC_API.Migrations
                     b.HasIndex("AlbumId");
 
                     b.ToTable("AlbumPhotos");
-                });
-
-            modelBuilder.Entity("DDAC_API.Models.Artist", b =>
-                {
-                    b.Property<int>("ArtistId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ArtistId");
-
-                    b.ToTable("Artists");
                 });
 
             modelBuilder.Entity("DDAC_API.Models.Author", b =>
@@ -287,7 +272,7 @@ namespace DDAC_API.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AlbumId")
+                    b.Property<int>("AlbumId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -340,17 +325,19 @@ namespace DDAC_API.Migrations
 
             modelBuilder.Entity("DDAC_API.Models.Album", b =>
                 {
-                    b.HasOne("DDAC_API.Models.Artist", "Artist")
+                    b.HasOne("DDAC_API.Models.AlbumCategory", "AlbumCategory")
                         .WithMany()
-                        .HasForeignKey("ArtistId");
+                        .HasForeignKey("AlbumCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Artist");
+                    b.Navigation("AlbumCategory");
                 });
 
             modelBuilder.Entity("DDAC_API.Models.AlbumPhoto", b =>
                 {
                     b.HasOne("DDAC_API.Models.Album", "Album")
-                        .WithMany()
+                        .WithMany("AlbumPhotos")
                         .HasForeignKey("AlbumId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -401,9 +388,16 @@ namespace DDAC_API.Migrations
                 {
                     b.HasOne("DDAC_API.Models.Album", "Album")
                         .WithMany()
-                        .HasForeignKey("AlbumId");
+                        .HasForeignKey("AlbumId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Album");
+                });
+
+            modelBuilder.Entity("DDAC_API.Models.Album", b =>
+                {
+                    b.Navigation("AlbumPhotos");
                 });
 
             modelBuilder.Entity("DDAC_API.Models.Author", b =>
