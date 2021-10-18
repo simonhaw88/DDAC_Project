@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "brCfAu9TQRK1k55lzNs5teBVmRYu8Sc3ih8Z49wYBY0pbJMyaQRadmIm7DwEu5/TVWaMUeVqjDSsXP8AR9qzrA==",
+  "dgSpecHash": "bCYlikmLFCkhyec8P7EgmJif2bx7UV3VtO5Bc+ZN+Na/QB+VVB4BQdyXSxIFFKq5ai9CmA+fYztkaP9kqJ9bhA==",
   "success": true,
   "projectFilePath": "C:\\Users\\simon\\source\\repos\\DDAC_Project\\DDAC_Project\\DDAC_Project.csproj",
   "expectedPackageFiles": [
@@ -10,6 +10,8 @@
     "C:\\Users\\simon\\.nuget\\packages\\awssdk.extensions.netcore.setup\\3.7.1\\awssdk.extensions.netcore.setup.3.7.1.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\awssdk.s3\\3.7.3.15\\awssdk.s3.3.7.3.15.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\awssdk.simplesystemsmanagement\\3.7.4.11\\awssdk.simplesystemsmanagement.3.7.4.11.nupkg.sha512",
+    "C:\\Users\\simon\\.nuget\\packages\\cloudscribe.pagination.models\\1.1.0\\cloudscribe.pagination.models.1.1.0.nupkg.sha512",
+    "C:\\Users\\simon\\.nuget\\packages\\cloudscribe.web.pagination\\3.1.0\\cloudscribe.web.pagination.3.1.0.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\livesharp\\2.0.20\\livesharp.2.0.20.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\microsoft.aspnet.webapi.client\\5.2.7\\microsoft.aspnet.webapi.client.5.2.7.nupkg.sha512",
@@ -133,6 +135,7 @@
     "C:\\Users\\simon\\.nuget\\packages\\system.io.filesystem.primitives\\4.3.0\\system.io.filesystem.primitives.4.3.0.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\system.linq\\4.3.0\\system.linq.4.3.0.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\system.linq.expressions\\4.3.0\\system.linq.expressions.4.3.0.nupkg.sha512",
+    "C:\\Users\\simon\\.nuget\\packages\\system.linq.queryable\\4.3.0\\system.linq.queryable.4.3.0.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\system.net.http\\4.3.0\\system.net.http.4.3.0.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\system.net.nameresolution\\4.3.0\\system.net.nameresolution.4.3.0.nupkg.sha512",

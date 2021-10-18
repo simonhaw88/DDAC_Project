@@ -180,3 +180,6 @@ C:\Users\simon\source\repos\DDAC_Project\DDAC_Project\obj\Debug\netcoreapp3.1\Ra
 C:\Users\simon\source\repos\DDAC_Project\DDAC_Project\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_HeaderStaff.cshtml.g.cs
 C:\Users\simon\source\repos\DDAC_Project\DDAC_Project\obj\Debug\netcoreapp3.1\Razor\Views\Album\Index.cshtml.g.cs
 C:\Users\simon\source\repos\DDAC_Project\DDAC_Project\obj\Debug\netcoreapp3.1\Razor\Views\Album\Create.cshtml.g.cs
+C:\Users\simon\source\repos\DDAC_Project\DDAC_Project\bin\Debug\netcoreapp3.1\cloudscribe.Pagination.Models.dll
+C:\Users\simon\source\repos\DDAC_Project\DDAC_Project\bin\Debug\netcoreapp3.1\cloudscribe.Web.Pagination.dll
+C:\Users\simon\source\repos\DDAC_Project\DDAC_Project\obj\Debug\netcoreapp3.1\Razor\Views\Album\Info.cshtml.g.cs

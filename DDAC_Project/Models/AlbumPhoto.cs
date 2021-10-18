@@ -12,8 +12,6 @@ namespace DDAC_Project.Models
         public string Name { get; set; }
 
         public int AlbumId { get; set; }
-
-        [ForeignKey("AlbumId")]
-        public Album Album { get; set; }
+ 
     }
 }

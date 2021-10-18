@@ -27,6 +27,7 @@ namespace DDAC_Project
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddCloudscribePagination();
             var builder = new SqlConnectionStringBuilder(
              Configuration.GetConnectionString("BooksConnection"));
             builder.Password = Configuration["DbPassword"];
@@ -37,6 +38,7 @@ namespace DDAC_Project
             services.AddSession(options => {
                 options.IdleTimeout = TimeSpan.FromMinutes(1);//You can set Time   
             });
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

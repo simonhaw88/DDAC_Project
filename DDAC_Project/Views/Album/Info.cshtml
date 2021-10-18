@@ -1,0 +1,113 @@
+﻿@model DDAC_Project.Models.Album
+@{
+}
+@section Scripts {
+    <script src="~/js/album/info.js"></script>
+}
+<div class="container mt-4">
+    <div class="row p-4 border border-1 shadow">
+        <div class="col col-5">
+            <img class="img-fluid" src=@(ViewBag.imgBaseUrl+"album/"+ ViewBag.Albums.albumPhotos[0].Name)>
+        </div>
+        <div class="col col-7">
+            <p class="fs-4 fw-bold">@ViewBag.Albums.Name</p>
+            <div class="d-flex flex-row bd-highlight mb-2">
+                <div class="p-2 bd-highlight"><span class="fs-5">By: @ViewBag.Albums.Author</span></div>
+                <div class="p-2 bd-highlight"><span class="fs-5">Category: @ViewBag.Albums.albumCategory.Name</span></div>
+            </div>
+            <div class="d-flex flex-row bd-highlight mb-2">
+                <div class="p-2 bd-highlight"><span class="fs-4">Price: </span><span class="fs-1 text-success fw-bolder">@("RM" + ViewBag.Albums.Price.ToString("0.00")) </span></div>
+            </div>
+
+            <div class="d-flex flex-row bd-highlight mb-2">
+                <div class="p-2 bd-highlight">
+                    <span class="fs-5">Quantity: </span>
+                </div>
+                <div class="p-2 bd-highlight">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-prepend">
+                            <button type="button" class="btn btn-outline-secondary btn-number" disabled="disabled" data-type="minus" data-field="quantity">
+                                <span class="fa fa-minus"></span>
+                            </button>
+                        </span>
+                        <input type="text" name="quantity" style="width:60px;" class="form-control input-number" value="1" min="1" max="10">
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-outline-secondary btn-number" data-type="plus" data-field="quantity">
+                                <span class="fa fa-plus"></span>
+                            </button>
+                        </span>
+                        <span class="p-2">@ViewBag.Albums.Stock piece available</span>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row bd-highlight mb-2">
+                <div class="p-2 bd-highlight">
+                    <div class="btn btn-lg btn-warning fw-bold me-3" style="width:200px;">Add To Cart</div>
+                    <div class="btn btn-lg btn-success fw-bold" style="width:200px;">Buy Now</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row p-4 border border-1 shadow mt-3">
+        <p class="fs-4 fw-bold p-2 bg-light">Product Details</p>
+        <span class="pb-2">
+            <span class="fs-6 fw-bold fw-1">Author : </span>
+            <span>@ViewBag.Albums.Author</span>
+        </span>
+        <span class="pb-2">
+            <span class="fs-6 fw-bold fw-1">Category : </span>
+            <span>@ViewBag.Albums.albumCategory.Name</span>
+        </span>
+        <span class="pb-2">
+            <span class="fs-6 fw-bold fw-1">Country of Origin : </span>
+            <span>@ViewBag.Albums.CountryOfOrigin</span>
+        </span>
+
+        <span class="pb-2">
+            <span class="fs-6 fw-bold fw-1">Release Date : </span>
+            <span>@ViewBag.Albums.ReleaseDate.ToString("dd-MM-yyyy")</span>
+        </span>
+
+    </div>
+    <div class="row p-4 border border-1 shadow mt-3">
+        <p class="fs-4 fw-bold p-2 bg-light">Product Description</p>
+        <span class="pb-2">
+            <span>@ViewBag.Albums.Description</span>
+        </span>
+
+
+    </div>
+    <div class="row p-4 border border-1 shadow mt-3">
+        <p class="fs-4 fw-bold p-2 bg-light">Tracks</p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Track</th>
+                     
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int i = 1;
+                    foreach (var track in ViewBag.Albums.Tracks)
+                    {
+                        <tr>
+                            <th scope="row">@i</th>
+                            <td>@track.Name</td>
+                        </tr>
+                        i++;
+                    }
+
+                }
+
+
+
+            </tbody>
+        </table>
+
+
+    </div>
+</div>

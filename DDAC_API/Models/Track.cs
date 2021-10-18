@@ -11,8 +11,6 @@ namespace DDAC_API.Models
         public int TrackId { get; set; }
         public string Name { get; set; }
         public int AlbumId { get; set; }
-
-        [ForeignKey("AlbumId")]
-        public Album Album { get; set; }
+ 
     }
 }

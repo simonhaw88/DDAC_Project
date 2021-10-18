@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DDAC_API.Models;
 using Microsoft.EntityFrameworkCore;
+using cloudscribe.Pagination.Models;
 
 namespace DDAC_API.Controllers
 {
@@ -21,17 +22,31 @@ namespace DDAC_API.Controllers
             _context = context;
         }
 
-        // GET: api/Albums
+
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Album>>> GetAlbums()
         {
-            return await _context.Albums.Include(a => a.Artist).ToListAsync();
+            return await _context.Albums.Include(a => a.Tracks).Include(a => a.AlbumCategory).Include(a => a.AlbumPhotos).ToListAsync();
         }
 
-        [HttpGet]
+        [HttpGet("{excludeRecord}/{pageSize}")]
+        public async Task<ActionResult<IEnumerable<Album>>> GetAlbums(int excludeRecord, int pageSize)
+        {
+            return await _context.Albums
+                .Include(a => a.Tracks)
+                .Include(a => a.AlbumCategory)
+                .Include(a => a.AlbumPhotos)
+                .Skip(excludeRecord)
+                .Take(pageSize)
+                .ToListAsync();
+
+        }
+
+        [HttpGet("{id}")]
         public async Task<ActionResult<Album>> GetAlbum(int id)
         {
-            var album = await _context.Albums.Include(a => a.Artist).FirstOrDefaultAsync(a => a.AlbumId == id);
+            var album = await _context.Albums.Include(a => a.Tracks).Include(a => a.AlbumCategory).Include(a => a.AlbumPhotos).FirstOrDefaultAsync(a => a.AlbumId == id);
 
             if (album == null)
             {
@@ -48,13 +63,6 @@ namespace DDAC_API.Controllers
             return CreatedAtAction("GetAlbum", new { id = album.AlbumId}, album);
         }
 
-        [HttpPost("albumPhoto")]
-        public async Task<ActionResult<AlbumPhoto>> PostAlbumPhoto(AlbumPhoto albumPhoto)
-        {
-            _context.AlbumPhotos.Add(albumPhoto);
-            await _context.SaveChangesAsync();
-
-            return Ok();
-        }
+       
     }
 }

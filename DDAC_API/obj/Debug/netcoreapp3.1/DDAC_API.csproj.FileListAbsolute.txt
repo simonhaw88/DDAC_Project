@@ -74,3 +74,4 @@ C:\Users\simon\source\repos\DDAC_Project\DDAC_API\obj\Debug\netcoreapp3.1\DDAC_A
 C:\Users\simon\source\repos\DDAC_Project\DDAC_API\bin\Debug\netcoreapp3.1\System.Net.Http.Formatting.dll
 C:\Users\simon\source\repos\DDAC_Project\DDAC_API\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
 C:\Users\simon\source\repos\DDAC_Project\DDAC_API\bin\Debug\netcoreapp3.1\AWSSDK.S3.dll
+C:\Users\simon\source\repos\DDAC_Project\DDAC_API\bin\Debug\netcoreapp3.1\cloudscribe.Pagination.Models.dll

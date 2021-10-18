@@ -8,6 +8,11 @@ namespace DDAC_API.Models
 {
     public class Album
     {
+        public Album()
+        {
+            AlbumPhotos = new List<AlbumPhoto>();
+            Tracks = new List<Track>();
+        }
         public int AlbumId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -19,7 +24,7 @@ namespace DDAC_API.Models
 
         public AlbumCategory AlbumCategory { get; set; }
 
-        public string Artist { get; set; }
+        public string Author { get; set; }
 
         public List<Track> Tracks { get; set; }
 

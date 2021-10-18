@@ -26,6 +26,19 @@ namespace DDAC_Project.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public async Task<IActionResult> Info(int id)
+        {
+            Album album = new Album();
+            HttpResponseMessage responseAlbums = await client.GetAsync("api/album/" + id);
+            if (responseAlbums.IsSuccessStatusCode)
+            {
+                var result = responseAlbums.Content.ReadAsStringAsync().Result;
+                album = JsonConvert.DeserializeObject<Album>(result);
+            }
+            ViewBag.Albums = album;
+            return View();
+        }
         public async Task<IActionResult> Create()
         {
             List<AlbumCategory> albumCategory = new List<AlbumCategory>();
@@ -50,7 +63,7 @@ namespace DDAC_Project.Controllers
         public async Task<IActionResult> Create(Album album)
         {
             bool fail = false;
-            HttpResponseMessage responseAlbum = await client.PostAsJsonAsync(
+            HttpResponseMessage responseAlbum = await this.client.PostAsJsonAsync(
                                    "api/album", album);
            
             if (!responseAlbum.IsSuccessStatusCode )
@@ -68,13 +81,13 @@ namespace DDAC_Project.Controllers
                     Name = photoName,
                     AlbumId = albumObj.AlbumId
                 };
-                HttpResponseMessage responseAlbumPhoto = await client.PostAsJsonAsync(
-                                       "api/album/albumPhoto", albumPhoto);
+                HttpResponseMessage responseAlbumPhoto = await this.client.PostAsJsonAsync(
+                                       "api/albumphoto/album", albumPhoto);
                 var form = new MultipartFormDataContent();
                 using (var fileStream = album.FormFile.OpenReadStream())
                 {
                     form.Add(new StreamContent(fileStream), "album.FormFile", photoName);
-                    using (var response = await this.client.PostAsync("api/image/AlbumPhotos", form))
+                    using (var response = await this.client.PostAsync("api/image/album", form))
                     {
                         if (!response.IsSuccessStatusCode)
                         {
@@ -83,6 +96,19 @@ namespace DDAC_Project.Controllers
                         }
                     }
                 }
+                foreach(var track in album.TrackNames)
+                {
+                    Track trackM = new Track() { Name = track, AlbumId = albumObj.AlbumId };
+                    HttpResponseMessage responseTrack = await this.client.PostAsJsonAsync(
+                                       "api/track", trackM);
+                    if (!responseTrack.IsSuccessStatusCode)
+                    {
+                        fail = true;
+                        ModelState.AddModelError("fail", await responseTrack.Content.ReadAsStringAsync());
+                    }
+                }
+                
+
                 if (!fail)
                 {
                     TempData["success"] = "Album is created successfully!";
@@ -90,6 +116,15 @@ namespace DDAC_Project.Controllers
                 }
                
             }
+            List<AlbumCategory> albumCategory = new List<AlbumCategory>();
+            HttpClient client = _api.Initial();
+            HttpResponseMessage res = await client.GetAsync("api/albumcategory");
+            if (res.IsSuccessStatusCode)
+            {
+                var result = res.Content.ReadAsStringAsync().Result;
+                albumCategory = JsonConvert.DeserializeObject<List<AlbumCategory>>(result);
+            }
+            ViewBag.AlbumCategory = albumCategory; 
             return View();
            
         }

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "jPzGDiZm9EQn9kZ2rkkWlz897mjXWrAiQX9Tk+tZ///30i9GhSE8O09av5IvA2vcG3jC9cfBPEcRPSgusiWjCA==",
+  "dgSpecHash": "2UiTyUZNHFfQnzCaQ8lDLQg3UJMa5UB3MtVgrWXbB2sJXV3FnLGXAi8YSC2lgoTOYioh0pb2036odHlh7CNnXw==",
   "success": true,
   "projectFilePath": "C:\\Users\\simon\\source\\repos\\DDAC_Project\\DDAC_API\\DDAC_API.csproj",
   "expectedPackageFiles": [
@@ -10,6 +10,7 @@
     "C:\\Users\\simon\\.nuget\\packages\\awssdk.extensions.netcore.setup\\3.7.1\\awssdk.extensions.netcore.setup.3.7.1.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\awssdk.s3\\3.7.3.15\\awssdk.s3.3.7.3.15.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\awssdk.simplesystemsmanagement\\3.7.4.11\\awssdk.simplesystemsmanagement.3.7.4.11.nupkg.sha512",
+    "C:\\Users\\simon\\.nuget\\packages\\cloudscribe.pagination.models\\1.1.0\\cloudscribe.pagination.models.1.1.0.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\microsoft.aspnet.webapi.client\\5.2.7\\microsoft.aspnet.webapi.client.5.2.7.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\2.2.0\\microsoft.aspnetcore.cryptography.internal.2.2.0.nupkg.sha512",
@@ -107,6 +108,7 @@
     "C:\\Users\\simon\\.nuget\\packages\\system.io.filesystem.primitives\\4.3.0\\system.io.filesystem.primitives.4.3.0.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\system.linq\\4.3.0\\system.linq.4.3.0.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\system.linq.expressions\\4.3.0\\system.linq.expressions.4.3.0.nupkg.sha512",
+    "C:\\Users\\simon\\.nuget\\packages\\system.linq.queryable\\4.3.0\\system.linq.queryable.4.3.0.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\system.net.http\\4.3.0\\system.net.http.4.3.0.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\system.net.nameresolution\\4.3.0\\system.net.nameresolution.4.3.0.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\system.net.primitives\\4.3.0\\system.net.primitives.4.3.0.nupkg.sha512",
