@@ -12,19 +12,10 @@ namespace DDAC_API.Models
     {
         public int UserId { get; set; }
 
-        [Required(ErrorMessage = "Email is Required")]
-        [DisplayName("Email Address")]
-        [DataType(DataType.EmailAddress)]
-        [Remote("IsEmailExist", "Auth", ErrorMessage = "Email Already Exist. Please choose another email.")]
         public string Email { get; set; }
 
-        [DisplayName("Password")]
-        [DataType(DataType.Password)]
-        [Required(ErrorMessage = "Password is Required")]
         public string Password { get; set; }
 
-        [DisplayName("Role")]
-        [Required(ErrorMessage = "Role is Required")]
         public int Role { get; set; }
 
       
