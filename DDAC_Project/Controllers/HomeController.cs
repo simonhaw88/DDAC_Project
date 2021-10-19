@@ -64,7 +64,7 @@ namespace DDAC_Project.Controllers
         }
 
       
-        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5)
+        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 15)
         {
             List<AlbumCategory> albumCategory = new List<AlbumCategory>();
             HttpClient client = _api.Initial();
@@ -76,28 +76,21 @@ namespace DDAC_Project.Controllers
             }
             ViewBag.AlbumCategory = albumCategory;
 
-            List<Album> album = new List<Album>();
-            HttpResponseMessage responseAlbums = await client.GetAsync("api/album/" + 0 + "/" +6);
-            if (responseAlbums.IsSuccessStatusCode)
-            {
-                var result = responseAlbums.Content.ReadAsStringAsync().Result;
-                album = JsonConvert.DeserializeObject<List<Album>>(result);
-            }
-            ViewBag.Albums = album;
-
+           
             List<Album> albumPag = new List<Album>();
             int ExcludeRecords = (pageSize * pageNumber) - pageSize;
-             HttpResponseMessage responseAlbumsPag = await client.GetAsync("api/album/"+ ExcludeRecords + "/"+pageSize);
+            HttpResponseMessage responseAlbumsPag = await client.GetAsync("api/album");
             if (responseAlbumsPag.IsSuccessStatusCode)
             {
                 var result = responseAlbumsPag.Content.ReadAsStringAsync().Result;
                 albumPag = JsonConvert.DeserializeObject<List<Album>>(result);
                 
             }
-            ViewBag.AlbumsPag = albumPag;
+            ViewBag.AlbumsPag = albumPag.Skip(ExcludeRecords).Take(pageSize);
+            ViewBag.Albums = albumPag.Take(6);
             ViewBag.pageNumber = pageNumber;
             ViewBag.pageSize = pageSize;
-            ViewBag.totalItems = albumPag.Count + 1;
+            ViewBag.totalItems = albumPag.Count;
             return View();
         }
         public IActionResult Logout()

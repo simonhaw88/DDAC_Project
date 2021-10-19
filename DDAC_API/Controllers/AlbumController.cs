@@ -30,15 +30,27 @@ namespace DDAC_API.Controllers
             return await _context.Albums.Include(a => a.Tracks).Include(a => a.AlbumCategory).Include(a => a.AlbumPhotos).ToListAsync();
         }
 
-        [HttpGet("{excludeRecord}/{pageSize}")]
-        public async Task<ActionResult<IEnumerable<Album>>> GetAlbums(int excludeRecord, int pageSize)
+       
+        [HttpGet("category/{value}")]
+        public async Task<ActionResult<IEnumerable<Album>>> GetAlbumsByCategory( int value)
         {
             return await _context.Albums
+                .Where(a=> a.AlbumCategoryId == value)
                 .Include(a => a.Tracks)
                 .Include(a => a.AlbumCategory)
                 .Include(a => a.AlbumPhotos)
-                .Skip(excludeRecord)
-                .Take(pageSize)
+                .ToListAsync();
+
+        }
+
+        [HttpGet("name/{value}")]
+        public async Task<ActionResult<IEnumerable<Album>>> GetAlbumsByName(string value)
+        {
+            return await _context.Albums
+                .Where(a => a.Name.Contains(value))
+                .Include(a => a.Tracks)
+                .Include(a => a.AlbumCategory)
+                .Include(a => a.AlbumPhotos)
                 .ToListAsync();
 
         }

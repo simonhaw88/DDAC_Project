@@ -36,6 +36,7 @@ namespace DDAC_Project.Models
 
         [Required(ErrorMessage = "Release date is required")]
         [DisplayName("Release Date")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         [DataType(DataType.Currency)]
         public DateTime ReleaseDate { get; set; }
 
@@ -56,5 +57,8 @@ namespace DDAC_Project.Models
         public List<Track> Tracks { get; set; }
         public List<AlbumPhoto> albumPhotos { get; set; }
         public CountryEnum CountryEnum { get; set; }
+
+
+
     }
 }

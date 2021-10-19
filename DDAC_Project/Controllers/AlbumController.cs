@@ -22,10 +22,51 @@ namespace DDAC_Project.Controllers
             client = _api.Initial();
             _context = context;
         }
-        public IActionResult Index()
+
+        [HttpGet("album/edit/{id}")]
+        public async Task<IActionResult> Edit(int id)
         {
+            List<AlbumCategory> albumCategory = new List<AlbumCategory>();
+            HttpClient client = _api.Initial();
+            HttpResponseMessage res = await client.GetAsync("api/albumcategory");
+            if (res.IsSuccessStatusCode)
+            {
+                var result = res.Content.ReadAsStringAsync().Result;
+                albumCategory = JsonConvert.DeserializeObject<List<AlbumCategory>>(result);
+            }
+            ViewBag.AlbumCategory = albumCategory;
+
+            Album album = new Album();
+            HttpResponseMessage responseAlbumsPag = await client.GetAsync("api/album/" + id);
+            if (responseAlbumsPag.IsSuccessStatusCode)
+            {
+                var result = responseAlbumsPag.Content.ReadAsStringAsync().Result;
+                album = JsonConvert.DeserializeObject<Album>(result);
+
+            }
+             return View(album);
+        }
+
+        [HttpGet("album")]
+        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 15)
+        {
+
+            List<Album> albumPag = new List<Album>();
+            int ExcludeRecords = (pageSize * pageNumber) - pageSize;
+            HttpResponseMessage responseAlbumsPag = await client.GetAsync("api/album");
+            if (responseAlbumsPag.IsSuccessStatusCode)
+            {
+                var result = responseAlbumsPag.Content.ReadAsStringAsync().Result;
+                albumPag = JsonConvert.DeserializeObject<List<Album>>(result);
+
+            }
+            ViewBag.AlbumsPag = albumPag.Skip(ExcludeRecords).Take(pageSize);
+            ViewBag.pageNumber = pageNumber;
+            ViewBag.pageSize = pageSize;
+            ViewBag.totalItems = albumPag.Count;
             return View();
         }
+
         [HttpGet]
         public async Task<IActionResult> Info(int id)
         {
@@ -38,6 +79,37 @@ namespace DDAC_Project.Controllers
             }
             ViewBag.Albums = album;
             return View();
+        }
+
+        [HttpGet("search/{type}")]
+        public async Task<IActionResult> Search(string type, string value, int pageNumber= 1, int pageSize=15 )
+        {
+            
+            List<AlbumCategory> albumCategory = new List<AlbumCategory>();
+            HttpClient client = _api.Initial();
+            HttpResponseMessage res = await client.GetAsync("api/albumcategory");
+            if (res.IsSuccessStatusCode)
+            {
+                var result = res.Content.ReadAsStringAsync().Result;
+                albumCategory = JsonConvert.DeserializeObject<List<AlbumCategory>>(result);
+            }
+            ViewBag.AlbumCategory = albumCategory;
+            //https://localhost:5001/search/category?value=2&&pageNumber=1&&pageSize=2
+            List<Album> albumPag = new List<Album>();
+            int ExcludeRecords = (pageSize * pageNumber) - pageSize;
+            HttpResponseMessage responseAlbumsPag = await client.GetAsync("api/album/"+ type +"/" + value );
+            if (responseAlbumsPag.IsSuccessStatusCode)
+            {
+                var result = responseAlbumsPag.Content.ReadAsStringAsync().Result;
+                albumPag = JsonConvert.DeserializeObject<List<Album>>(result);
+
+            }
+            ViewBag.AlbumsPag = albumPag.Skip(ExcludeRecords).Take(pageSize);
+            ViewBag.pageNumber = pageNumber;
+            ViewBag.pageSize = pageSize;
+            ViewBag.totalItems = albumPag.Count ;
+            return View();
+
         }
         public async Task<IActionResult> Create()
         {
