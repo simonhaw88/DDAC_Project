@@ -44,10 +44,9 @@ namespace DDAC_API.Controllers
         [HttpPost("verifyUser")]
         public ActionResult<User> VerifyUser(User usr)
         {
-            User user =  _context.Users.Where(d => d.Email == usr.Email && d.Password == usr.Password && d.Role == usr.Role).FirstOrDefault();
+            return _context.Users.Where(d => d.Email == usr.Email && d.Password == usr.Password && d.Role == usr.Role).FirstOrDefault();
             
-
-            return user;
+ 
         }
     }
 }
