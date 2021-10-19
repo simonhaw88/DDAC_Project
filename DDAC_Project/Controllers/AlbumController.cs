@@ -147,7 +147,7 @@ namespace DDAC_Project.Controllers
             {
                 var result = responseAlbum.Content.ReadAsStringAsync().Result;
                 Album albumObj = JsonConvert.DeserializeObject<Album>(result);
-                string photoName = albumObj.AlbumId + "_" + album.FormFile.FileName.ToString();
+                string photoName = albumObj.AlbumId + "_" + album.FormFile.FileName.Replace(" ", String.Empty).ToString();
                 AlbumPhoto albumPhoto = new AlbumPhoto()
                 {
                     Name = photoName,
