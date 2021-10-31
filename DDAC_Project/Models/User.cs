@@ -28,6 +28,10 @@ namespace DDAC_Project.Models
         [Required(ErrorMessage = "Role is Required")]
         public int Role { get; set; }
 
+        [DisplayName("Security Question")]
+        [Required(ErrorMessage = "Security answer is required")]
+        public string SecurityAns { get; set; }
+
         public int Status { get; set; }
 
         public Staff Staff { get; set; }

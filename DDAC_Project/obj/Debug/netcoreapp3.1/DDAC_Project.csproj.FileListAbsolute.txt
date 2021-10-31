@@ -198,3 +198,5 @@ C:\Users\simon\source\repos\DDAC_Project\DDAC_Project\obj\Debug\netcoreapp3.1\Ra
 C:\Users\simon\source\repos\DDAC_Project\DDAC_Project\bin\Debug\netcoreapp3.1\DataAnnotationsExtensions.dll
 C:\Users\simon\source\repos\DDAC_Project\DDAC_Project\obj\Debug\netcoreapp3.1\Razor\Views\Home\Contact.cshtml.g.cs
 C:\Users\simon\source\repos\DDAC_Project\DDAC_Project\bin\Debug\netcoreapp3.1\Xamarin.Essentials.dll
+C:\Users\simon\source\repos\DDAC_Project\DDAC_Project\obj\Debug\netcoreapp3.1\Razor\Views\Auth\ForgotPassword.cshtml.g.cs
+C:\Users\simon\source\repos\DDAC_Project\DDAC_Project\obj\Debug\netcoreapp3.1\Razor\Views\Auth\Set_new_pasasword.cshtml.g.cs

@@ -14,6 +14,7 @@
         public string Password { get; set; }
 
         public int Role { get; set; }
+        public string SecurityAns { get; set; }
 
         public int Status { get; set; }
 

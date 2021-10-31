@@ -20,11 +20,11 @@ namespace DDAC_API.Controllers
         }
 
         [HttpGet("search")]
-        public async Task<ActionResult<IEnumerable<User>>> SearchUsers(int role, string email)
+        public async Task<ActionResult<IEnumerable<User>>> SearchUsers(string email, int role = 0)
         {
 
             IQueryable<User> users = _context.Users;
-            if (role.ToString() != null)
+            if (role != 0)
             {
                 users = users.Where(a => a.Role == role);
                 if(role == (int)UserEnum.Admin)

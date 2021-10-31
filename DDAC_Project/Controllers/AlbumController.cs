@@ -175,7 +175,6 @@ namespace DDAC_Project.Controllers
             {
                 return RedirectToAction("Login", "Auth");
             }
-
             Album album = new Album();
             HttpResponseMessage responseAlbumsPag = await this.client.GetAsync("api/album/" + id);
             if (responseAlbumsPag.IsSuccessStatusCode)

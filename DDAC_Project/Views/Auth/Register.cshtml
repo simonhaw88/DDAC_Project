@@ -13,33 +13,41 @@
     <div class="container-xl mt-5 ps-3 pe-3">
         @using (Html.BeginForm("Register", "Auth", FormMethod.Post))
         {
-            <form>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Email, new { @class = "fw-bold fs-6" })
-                    @Html.TextBoxFor(m => m.Email, "", new { @class = "form-control border border-dark mt-1 shadow", @placeholder = "Enter email" })
-                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+        <form>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email, new { @class = "fw-bold fs-6" })
+                @Html.TextBoxFor(m => m.Email, "", new { @class = "form-control border border-dark mt-1 shadow", @placeholder = "Enter email" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
 
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Password, new { @class = "fw-bold fs-6" })
-                    @Html.PasswordFor(m => m.Password, new { @class = "form-control border border-dark mt-1 shadow", @placeholder = "Password" })
-                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Role, new { @class = "fw-bold fs-6" })
-                    @Html.DropDownListFor(model => model.Role, new SelectList(Enum.GetValues(typeof(UserEnum)).OfType<UserEnum>().Select(
-                    m => new { Text = m.ToString(), Value = (int)m }).ToList(), "Value", "Text"), "Select Role", new { @class = "form-control form-control-sm border border-dark mt-1 shadow" })
-                    @Html.ValidationMessageFor(m => m.Role, "", new { @class = "text-danger" })
-                    @Html.ValidationMessage("Global", new { @class = "text-danger" })
-                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password, new { @class = "fw-bold fs-6" })
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control border border-dark mt-1 shadow", @placeholder = "Password" })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Role, new { @class = "fw-bold fs-6" })
+                <select class="form-control form-control-sm border border-dark mt-1 shadow" data-val="true" data-val-required="Role is Required" id="Role" name="Role">
+                    <option value="">Select Role</option>
+                    <option value="1">Customer</option>
+                </select>
+                @Html.ValidationMessageFor(m => m.Role, "", new { @class = "text-danger" })
+                @Html.ValidationMessage("Global", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.SecurityAns, new { @class = "fw-bold fs-6" })
+                @Html.TextBoxFor(m => m.SecurityAns, "", new { @class = "form-control border border-dark mt-1 shadow", @placeholder = "What is your favourite fruit?" })
+                @Html.ValidationMessageFor(m => m.SecurityAns, "", new { @class = "text-danger" })
+                @Html.ValidationMessage("Global", new { @class = "text-danger" })
+            </div>
 
-                <div class="row">
-                    <div class="d-flex p-2 m-1 justify-content-center md-2">
-                        <button type="submit" class="btn rounded rounded-3 nav-bg-colour text-white fs-4 shadow-lg col col-7 mt-4">Submit</button>
-                    </div>
+            <div class="row">
+                <div class="d-flex p-2 m-1 justify-content-center md-2">
+                    <button type="submit" class="btn rounded rounded-3 nav-bg-colour text-white fs-4 shadow-lg col col-7 mt-4">Submit</button>
                 </div>
+            </div>
 
-            </form>
+        </form>
 
         }
         <div class="text-center">
