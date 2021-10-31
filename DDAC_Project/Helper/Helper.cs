@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DDAC_Project.Helper
 {
-    public class AuthorAPI
+    public class ApiHelper
     {
         public HttpClient Initial()
         {

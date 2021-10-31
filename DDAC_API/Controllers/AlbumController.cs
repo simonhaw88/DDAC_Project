@@ -1,5 +1,4 @@
 ﻿using DDAC_API.Data;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -7,7 +6,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using DDAC_API.Models;
 using Microsoft.EntityFrameworkCore;
-using cloudscribe.Pagination.Models;
 
 namespace DDAC_API.Controllers
 {
@@ -27,32 +25,46 @@ namespace DDAC_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Album>>> GetAlbums()
         {
-            return await _context.Albums.Include(a => a.Tracks).Include(a => a.AlbumCategory).Include(a => a.AlbumPhotos).ToListAsync();
+            return await _context.Albums
+                .Include(a => a.Tracks)
+                .Include(a=>a.AlbumCategory)
+                .Include(a=>a.AlbumPhotos)
+                .OrderByDescending(e=>e.AlbumId)
+                .ToListAsync();
         }
 
        
-        [HttpGet("category/{value}")]
-        public async Task<ActionResult<IEnumerable<Album>>> GetAlbumsByCategory( int value)
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<Album>>> SearchAlbums(string type, string value)
         {
-            return await _context.Albums
-                .Where(a=> a.AlbumCategoryId == value)
-                .Include(a => a.Tracks)
-                .Include(a => a.AlbumCategory)
-                .Include(a => a.AlbumPhotos)
-                .ToListAsync();
+             
+            IQueryable<Album> albums = _context.Albums;
+            if (type != null && value !=null )
+            {
+                if(type == "name")
+                {
+                    albums = albums.Where(a => a.Name.Contains(value));
+                } else if(type == "category")
+                {
+                    albums = albums.Where(a => a.AlbumCategoryId == Convert.ToInt32(value));
+                }
 
-        }
+            }
+            
+            var result = await albums.
+                Include(a => a.Tracks).
+                Include(a => a.AlbumCategory).
+                Include(a => a.AlbumPhotos).
+                OrderByDescending(e => e.AlbumId).
+                ToListAsync();
 
-        [HttpGet("name/{value}")]
-        public async Task<ActionResult<IEnumerable<Album>>> GetAlbumsByName(string value)
-        {
-            return await _context.Albums
-                .Where(a => a.Name.Contains(value))
-                .Include(a => a.Tracks)
-                .Include(a => a.AlbumCategory)
-                .Include(a => a.AlbumPhotos)
-                .ToListAsync();
+            if (result == null)
+            {
+                return NotFound();
+            }
 
+            return result;
+           
         }
 
         [HttpGet("{id}")]
@@ -67,7 +79,35 @@ namespace DDAC_API.Controllers
 
             return album;
         }
-        [HttpPost]
+
+        [HttpDelete("delete/{id}")]
+        public async Task<ActionResult> DeleteAlbum(int id)
+        {
+            var album = await _context.Albums.FindAsync(id);
+            if (album == null)
+            {
+                return NotFound();
+            }
+
+            _context.Albums.Remove(album);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+
+        [HttpPut("updateAlbum")]
+        public async Task<ActionResult> PutAlbum(Album album)
+        {
+            
+            _context.Entry(album).State = EntityState.Modified;
+
+             await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        [HttpPost("postAlbum")]
         public async Task<ActionResult<Album>> PostAlbum(Album album)
         {
             _context.Albums.Add(album);
@@ -76,5 +116,6 @@ namespace DDAC_API.Controllers
         }
 
        
+
     }
 }

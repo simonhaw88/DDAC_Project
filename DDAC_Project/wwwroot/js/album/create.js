@@ -1,4 +1,11 @@
 ﻿$(document).ready(function () {
+    var todaysDate = new Date();
+    var year = todaysDate.getFullYear();
+    var month = ("0" + (todaysDate.getMonth() + 1)).slice(-2);
+    var day = ("0" + todaysDate.getDate()).slice(-2);
+    var maxDate = (year + "-" + month + "-" + day);
+    $('#ReleaseDate').attr('max', maxDate);
+
     $("#add-track").click(function () {
         var trackCol = $(".track:first").clone();
         var trackAction = $(".track-action:first").clone();

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DDAC_Project.Models
 {
@@ -11,9 +7,11 @@ namespace DDAC_Project.Models
         public int TrackId { get; set; }
         public string Name { get; set; }
 
+        [ForeignKey("Album")]
         public int AlbumId { get; set; }
 
-        [ForeignKey("AlbumId")]
         public Album Album { get; set; }
+
+
     }
 }

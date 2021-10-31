@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DDAC_API.Models;
@@ -34,14 +32,29 @@ namespace DDAC_API.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost("postTrack")]
         public async Task<ActionResult<Track>> PostTrack(Track track)
         {
             _context.Tracks.Add(track);
             await _context.SaveChangesAsync();
             return CreatedAtAction("GetTrack", new { id = track.TrackId}, track);
         }
-        
+
+        [HttpDelete("delete/albumId/{id}")]
+        public async Task<ActionResult<Track>> DeleteTracks(int id)
+        {
+            var tracks = await _context.Tracks.Where(a => a.AlbumId == id).ToListAsync();
+            if (tracks == null)
+            {
+                return NotFound();
+            }
+
+            _context.Tracks.RemoveRange(tracks);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
 
     }
 }

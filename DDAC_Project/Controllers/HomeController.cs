@@ -1,7 +1,6 @@
 ﻿using DDAC_Project.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -10,10 +9,7 @@ using DDAC_Project.Helper;
 using System.Net.Http;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
-using System.IO;
-using DDAC_Project.Data;
 using Amazon.S3;
-using Amazon.S3.Model;
 using Amazon;
 
 namespace DDAC_Project.Controllers
@@ -21,7 +17,7 @@ namespace DDAC_Project.Controllers
     public class HomeController : Controller
     {
         private static IAmazonS3 amazonS3;
-        AuthorAPI _api = new AuthorAPI();
+        ApiHelper _api = new ApiHelper();
         private HttpClient client;
         private readonly ILogger<HomeController> _logger;
         private static readonly RegionEndpoint bucketRegion = RegionEndpoint.USEast1;
@@ -35,35 +31,21 @@ namespace DDAC_Project.Controllers
            
         }
         
-        public IActionResult FileUploadForm()
+        public async Task<IActionResult> Contact()
         {
+            List<User> users = new List<User>();
+            HttpResponseMessage responseAdmins = await client.GetAsync("api/user/search?role=" + (int)UserEnum.Admin);
+
+            if (responseAdmins.IsSuccessStatusCode)
+            {
+                var result = responseAdmins.Content.ReadAsStringAsync().Result;
+                users = JsonConvert.DeserializeObject<List<User>>(result);
+
+            }
+            ViewBag.User = users.First();
+            ViewBag.Url = "Contact Admin";
             return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> FileUploadForm([FromForm] FileUploadFormModal FileUpload)
-        {
-            string apiResponse;
-
-            var form = new MultipartFormDataContent();
-                using (var fileStream = FileUpload.FormFile.OpenReadStream())
-                {
-                    form.Add(new StreamContent(fileStream), "FileUpload.FormFile", FileUpload.FormFile.FileName);
-                    using (var response = await this.client.PostAsync("api/image/AlbumPhotos", form))
-                    {
-                        response.EnsureSuccessStatusCode();
-                        apiResponse = await response.Content.ReadAsStringAsync();
-                    }
-                }
-            ModelState.AddModelError("Global", FileUpload.FormFile.FileName.ToString());
-           
-
-
-            return View();
-
-        }
-
-      
+        }      
         public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 15)
         {
             List<AlbumCategory> albumCategory = new List<AlbumCategory>();
@@ -91,6 +73,7 @@ namespace DDAC_Project.Controllers
             ViewBag.pageNumber = pageNumber;
             ViewBag.pageSize = pageSize;
             ViewBag.totalItems = albumPag.Count;
+            ViewBag.Url = "Home";
             return View();
         }
         public IActionResult Logout()

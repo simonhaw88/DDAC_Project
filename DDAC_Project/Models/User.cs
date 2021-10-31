@@ -1,20 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc;
+using DataAnnotationsExtensions;
+using Xamarin.Essentials;
 
 namespace DDAC_Project.Models
 {
     public class User
     {
+        public User()
+        {
+            Status = 1;
+        }
+
         public int UserId { get; set; }
 
         [Required(ErrorMessage = "Email is Required")]
         [DisplayName("Email Address")]
-        [DataType(DataType.EmailAddress)]
+        [Email] 
         public string Email { get; set; }
 
         [DisplayName("Password")]
@@ -25,7 +27,17 @@ namespace DDAC_Project.Models
         [DisplayName("Role")]
         [Required(ErrorMessage = "Role is Required")]
         public int Role { get; set; }
-        public UserEnum UserRole { get; set; }      
+
+        public int Status { get; set; }
+
+        public Staff Staff { get; set; }
+
+        public Admin Admin { get; set; }
+
+        public Customer Customer { get; set; }
+
+        public UserEnum UserRole { get; set; }
+
     }
-   
+
 }

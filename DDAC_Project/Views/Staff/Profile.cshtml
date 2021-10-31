@@ -1,0 +1,137 @@
+﻿@model DDAC_Project.Models.User
+@{
+    User user = ViewBag.User;
+}
+@section Scripts {
+    <script src="~/js/show_hide_msgbox.js"></script>
+}
+
+
+<div class="container-xxl border border-0 shadow-lg pt-2 border-secondary"
+     style="height:130px;border-radius: 10px;">
+    <div class="d-flex p-3 m-4 justify-content-between md-2">
+        <label class="label fs-3 fw-bold">
+            Staff's Profile
+        </label>
+    </div>
+</div>
+<div id="msgBox" class="container d-none mt-4">
+    <div id="msg" class="alert alert-success">
+        @Html.ValidationMessage("success", new { @class = "success-msg text-success" })
+    </div>
+</div>
+<div class="row mt-2 mb-2">
+    <div class="col">
+        <a asp-controller="Staff" asp-action="Edit" asp-route-id=@user.UserId class="btn btn-success m-2 float-end ">Edit Profile</a>
+    </div>
+</div>
+<div class="container shadow-lg p-4 mt-5" style="width:auto;max-width:700px;">
+    <div class="container-xl mt-2 ps-3 pe-3">
+        <div class="row d-flex">
+            <div class="col">
+                <h3><b>General Information</b></h3>
+            </div>
+        </div>
+        <hr />
+
+        <div class="row d-flex">
+            <div class="col col-4">
+                <b>Admin ID:</b>
+            </div>
+            <div class="col">
+                @user.Staff.StaffId
+            </div>
+        </div>
+        <div class="row d-flex">
+            <div class="col col-4">
+                <b>Name:</b>
+            </div>
+            <div class="col">
+                @(user.Staff.FirstName == null ? "-" : user.Staff.FirstName) @(user.Staff.LastName == null ? "-" : user.Staff.LastName)
+            </div>
+        </div>
+        <div class="row d-flex">
+            <div class="col col-4">
+                <b>Email :</b>
+            </div>
+            <div class="col">
+                @(user.Email)
+            </div>
+        </div>
+        <div class="row d-flex">
+            <div class="col col-4">
+                <b>Contact No:</b>
+            </div>
+            <div class="col">
+                @(user.Staff.ContactNo.ToString() == null ? "-" : user.Staff.ContactNo.ToString())
+            </div>
+        </div>
+        <div class="row d-flex">
+            <div class="col col-4">
+                <b>Date of Birth:</b>
+            </div>
+            <div class="col">
+                @(user.Staff.DateOfBirth.ToShortDateString() == null ? "-" : user.Staff.DateOfBirth.ToShortDateString())
+            </div>
+        </div>
+        <div class="row d-flex">
+            <div class="col col-4">
+                <b>Gender:</b>
+            </div>
+            <div class="col">
+                @(user.Staff.Gender.ToString() == null ? "-" : user.Staff.Gender.ToString())
+            </div>
+        </div>
+        <hr />
+
+        <div class="row mt-2">
+            <div class="col">
+                <h4><b>Address</b></h4>
+            </div>
+        </div>
+        <hr />
+
+        <div class="row d-flex ">
+            <div class="col col-4">
+                <b>Full Address :</b>
+            </div>
+            <div class="col">
+                @(user.Staff.Address.Line)
+            </div>
+        </div>
+        <div class="row d-flex">
+            <div class="col col-4">
+                <b>City :</b>
+            </div>
+            <div class="col">
+                @(user.Staff.Address.City)
+            </div>
+        </div>
+        <div class="row d-flex">
+            <div class="col col-4">
+                <b>Region :</b>
+            </div>
+            <div class="col">
+                @(user.Staff.Address.Region)
+            </div>
+        </div>
+        <div class="row d-flex">
+            <div class="col col-4">
+                <b>Postcode :</b>
+            </div>
+            <div class="col">
+                @(user.Staff.Address.PostCode)
+            </div>
+        </div>
+        <div class="row d-flex">
+            <div class="col col-4">
+                <b>Country :</b>
+            </div>
+            <div class="col">
+                @(user.Staff.Address.Country)
+            </div>
+        </div>
+
+
+    </div>
+</div>

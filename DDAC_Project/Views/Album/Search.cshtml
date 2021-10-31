@@ -4,10 +4,10 @@
 }
 <div class="d-flex justify-content-center">
     <div class="col col-8 mt-3">
-        <form action="/search/name">
+        <form action="">
             <div class="input-group mb-3">
-
                 <input type="text" name="value" class="form-control" placeholder="Search for music album">
+                <input type="hidden" name="type" value="name" />
                 <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
 
             </div>
@@ -22,7 +22,7 @@
                     <h3 class="mb-3">All Musics </h3>
                 </div>
                 <div class="col-6 pt-1">
-                    <select class="custom-select float-end" id="inputGroupSelect01" onchange="location = '/search/category?value='+this.value;">
+                    <select class="custom-select float-end" id="inputGroupSelect01" onchange="location = '?type=category&value='+this.value;">
                         <option selected>Select Category...</option>
                         @foreach (var category in ViewBag.AlbumCategory)
                         {
@@ -42,7 +42,7 @@
                                     {
                                         <div class="col-md-3 mb-3">
                                             <div class="card" style="width:280px;height:430px;">
-                                                <img class="img-fluid" alt="100%x280" src=@(ViewBag.imgBaseUrl+"album/"+ album.albumPhotos[0].Name)>
+                                                <img class="img-fluid" alt="100%x280" src=@(ViewBag.imgBaseUrl+"album/"+ album.AlbumPhotos[0].Name)>
                                                 <div class="card-body">
                                                     <h6 class="card-title text--overflow">@album.Name</h6>
                                                     <h7 class="card-text text-muted">@("By: " + album.Author)</h7><br />
@@ -64,15 +64,16 @@
         </div>
     </section>
 </div>
-<cs-pager cs-paging-pagenumber=@ViewBag.pageNumber
-          cs-paging-totalitems=@ViewBag.totalItems
-          cs-paging-pagesize=@ViewBag.pageSize
-          cs-pagenumber-param="pagenumber"
-          asp-controller="Album"
-          asp-action="Search"
-          cs-pager-li-current-class="page-item active"
-          cs-pager-li-other-class="page-item"
-          cs-pager-li-non-active-class="page-item disabled"
-          cs-pager-link-current-class="page-link"
-          cs-pager-link-other-class="page-link"></cs-pager>
-
+<div class="d-flex justify-content-center">
+    <cs-pager cs-paging-pagenumber=@ViewBag.pageNumber
+              cs-paging-totalitems=@ViewBag.totalItems
+              cs-paging-pagesize=@ViewBag.pageSize
+              cs-pagenumber-param="pagenumber"
+              asp-controller="Album"
+              asp-action="Search"
+              cs-pager-li-current-class="page-item active"
+              cs-pager-li-other-class="page-item"
+              cs-pager-li-non-active-class="page-item disabled"
+              cs-pager-link-current-class="page-link"
+              cs-pager-link-other-class="page-link"></cs-pager>
+</div>

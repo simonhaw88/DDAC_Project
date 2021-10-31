@@ -1,37 +1,49 @@
 ﻿@model DDAC_Project.Models.User
 @{
 }
-<div class="container border border-2">
-    <div class="d-flex p-3 m-4 justify-content-between md-2">
-        <label class="label fs-3 fw-bold">
-            Register
-        </label>
+<div class="container shadow-lg p-4 mt-5" style="width:auto;max-width:500px;">
+    <div class="container mt-2">
+        <div class="d-flex p-2 m-1 justify-content-center md-2">
+            <label class="label fs-1 fw-bolder nav-blue text-justify">
+                Register
+            </label>
+        </div>
     </div>
-</div>
-<div class="container-xl mt-5 ps-3 pe-3">
-    @using (Html.BeginForm("Register", "Auth", FormMethod.Post))
-    {
-    <form>
-        <div class="form-group">
-            @Html.Label("Email")
-            @Html.TextBoxFor(m => m.Email, "", new { @class = "form-control", @placeholder = "Enter email" })
-            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
 
+    <div class="container-xl mt-5 ps-3 pe-3">
+        @using (Html.BeginForm("Register", "Auth", FormMethod.Post))
+        {
+            <form>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email, new { @class = "fw-bold fs-6" })
+                    @Html.TextBoxFor(m => m.Email, "", new { @class = "form-control border border-dark mt-1 shadow", @placeholder = "Enter email" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password, new { @class = "fw-bold fs-6" })
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control border border-dark mt-1 shadow", @placeholder = "Password" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Role, new { @class = "fw-bold fs-6" })
+                    @Html.DropDownListFor(model => model.Role, new SelectList(Enum.GetValues(typeof(UserEnum)).OfType<UserEnum>().Select(
+                    m => new { Text = m.ToString(), Value = (int)m }).ToList(), "Value", "Text"), "Select Role", new { @class = "form-control form-control-sm border border-dark mt-1 shadow" })
+                    @Html.ValidationMessageFor(m => m.Role, "", new { @class = "text-danger" })
+                    @Html.ValidationMessage("Global", new { @class = "text-danger" })
+                </div>
+
+                <div class="row">
+                    <div class="d-flex p-2 m-1 justify-content-center md-2">
+                        <button type="submit" class="btn rounded rounded-3 nav-bg-colour text-white fs-4 shadow-lg col col-7 mt-4">Submit</button>
+                    </div>
+                </div>
+
+            </form>
+
+        }
+        <div class="text-center">
+            <a asp-controller="Auth" asp-action="Login">Already has an account? Login now</a>
         </div>
-        <div class="form-group">
-            @Html.Label("Password")
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
-            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-        </div>
-        <div class="form-group">
-            @Html.Label("Role")
-            @Html.DropDownListFor(model => model.Role, new SelectList(Enum.GetValues(typeof(UserEnum)).OfType<UserEnum>().Select(
-            m => new { Text = m.ToString(), Value = (int)m }).ToList(), "Value", "Text"), "Select Role", new { @class = "form-control form-control-sm" })
-            @Html.ValidationMessageFor(m => m.Role, "", new { @class = "text-danger" })
-            @Html.ValidationMessage("Global", new { @class = "text-danger" })
-        </div>
-       
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-    }
+    </div>
 </div>

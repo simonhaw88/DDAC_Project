@@ -7,7 +7,7 @@
 <div class="container mt-4">
     <div class="row p-4 border border-1 shadow">
         <div class="col col-5">
-            <img class="img-fluid" src=@(ViewBag.imgBaseUrl+"album/"+ ViewBag.Albums.albumPhotos[0].Name)>
+            <img class="img-fluid" src=@(ViewBag.imgBaseUrl+"album/"+ ViewBag.Albums.AlbumPhotos[0].Name)>
         </div>
         <div class="col col-7">
             <p class="fs-4 fw-bold">@ViewBag.Albums.Name</p>
@@ -30,7 +30,7 @@
                                 <span class="fa fa-minus"></span>
                             </button>
                         </span>
-                        <input type="text" name="quantity" style="width:60px;" class="form-control input-number" value="1" min="1" max="10">
+                        <input type="text" name="quantity" style="width:60px;" class="form-control input-number" value="1" min="1" max=@ViewBag.Albums.Stock>
                         <span class="input-group-append">
                             <button type="button" class="btn btn-outline-secondary btn-number" data-type="plus" data-field="quantity">
                                 <span class="fa fa-plus"></span>
@@ -44,8 +44,8 @@
 
             <div class="d-flex flex-row bd-highlight mb-2">
                 <div class="p-2 bd-highlight">
-                    <div class="btn btn-lg btn-warning fw-bold me-3" style="width:200px;">Add To Cart</div>
-                    <div class="btn btn-lg btn-success fw-bold" style="width:200px;">Buy Now</div>
+                    <div class="btn btn-lg btn-warning fw-bold me-3 @(ViewBag.Albums.Stock == 0 ? "disabled" : "")"  style="width:200px;">Add To Cart</div>
+                    <div class="btn btn-lg btn-success fw-bold @(ViewBag.Albums.Stock == 0 ? "disabled" : "")" style="width:200px;">Buy Now</div>
                 </div>
             </div>
         </div>
@@ -84,7 +84,7 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
+                    <th scope="col">ID</th>
                     <th scope="col">Track</th>
                      
                 </tr>
@@ -100,11 +100,7 @@
                         </tr>
                         i++;
                     }
-
                 }
-
-
-
             </tbody>
         </table>
 

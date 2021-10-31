@@ -19,11 +19,13 @@ namespace DDAC_API.Models
         public double Price { get; set; }
         public int Stock { get; set; }
         public string CountryOfOrigin { get; set; }
+
+        [Column(TypeName = "Date")]
         public DateTime ReleaseDate { get; set; }
+
+        [ForeignKey("AlbumCategory")]
         public int AlbumCategoryId { get; set; }
-
         public AlbumCategory AlbumCategory { get; set; }
-
         public string Author { get; set; }
 
         public List<Track> Tracks { get; set; }

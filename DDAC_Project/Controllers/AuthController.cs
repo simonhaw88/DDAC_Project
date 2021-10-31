@@ -1,29 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Web;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using DDAC_Project.Models;
 using DDAC_Project.Data;
 using System.Net.Http;
-using System.Net.Http.Formatting;
 using DDAC_Project.Helper;
 using Newtonsoft.Json;
-using System.Security.Cryptography;
-using System.Text;
 using Microsoft.AspNetCore.Http;
-using Amazon.S3.Model;
+using DDAC_Project.Factories;
 
 namespace DDAC_Project.Controllers
 {
 
     public class AuthController : Controller
     {
-        AuthorAPI _api = new AuthorAPI();
+        ApiHelper _api = new ApiHelper();
 
         private readonly DDAC_Context _context;
         private HttpClient client;
+        private readonly string seassion_userId = "userId";
+        private readonly string seassion_role = "role";
+
         public AuthController(DDAC_Context context)
         {
             client = _api.Initial();
@@ -44,45 +40,110 @@ namespace DDAC_Project.Controllers
             return View();
         }
 
+        [ActionName("password")]
+        public IActionResult ChangePassword()
+        {
+            return View("Password");
+        }
+
+        [ActionName("editpassword")]
+        [HttpPost]
+        public async Task<IActionResult> PostEditPassword(string password, string newPassword, string confirmNewPassword)
+        {
+            if (ModelState.IsValid)
+            {
+                var userId = HttpContext.Session.GetInt32(seassion_userId);
+                var role = HttpContext.Session.GetInt32(seassion_role);
+                if (!userId.HasValue)
+                {
+                    return RedirectToAction("Login", "Auth");
+                }
+
+                if (newPassword != confirmNewPassword)
+                {
+                    ModelState.AddModelError("confirmNewPassword", "New Password and confirm new password must be same!");
+                    return View("Password");
+                }
+                else
+                {
+                    HttpResponseMessage responseGetUser = await this.client.GetAsync("api/user/" + (int)userId);
+                    User user = new User();
+                    if (responseGetUser.IsSuccessStatusCode)
+                    {
+                        var result = responseGetUser.Content.ReadAsStringAsync().Result;
+                        user = JsonConvert.DeserializeObject<User>(result);
+
+                        string encryptedPassword = Password.encryption(password);
+                        if (user.Password == encryptedPassword)
+                        {
+                            user.Password = Password.encryption(newPassword);
+                            HttpResponseMessage responseUpdate = await this.client.PutAsJsonAsync(
+                                           "api/user/update", user);
+                            if (!responseUpdate.IsSuccessStatusCode)
+                            {
+                                ModelState.AddModelError("fail", await responseUpdate.Content.ReadAsStringAsync());
+                                return View("Password");
+                            }
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("fail", "Current password invalid.");
+                            return View("Password");
+                        }
+                    }
+                }
+                ModelState.AddModelError("success", "Password updated successfully");
+            }
+            return View("Password");
+        }
+
         [HttpPost]
         public async Task<IActionResult> Login(User md)
         {
-            var curr_password = md.Password;
-            md.Password = encryption(curr_password);
-            HttpResponseMessage res = await client.PostAsJsonAsync("api/user/verifyUser" , md);
-            var result = res.Content.ReadAsStringAsync().Result;
-            if (result == "")
+            if (ModelState.IsValid)
             {
-                ModelState.AddModelError("Global", "Invalid User");
-            }
-            else
-            {
-                User user = new User();
-                user = JsonConvert.DeserializeObject<User>(result);
-                HttpContext.Session.SetInt32("userId", user.UserId);
-                HttpContext.Session.SetInt32("role", user.Role);
-                if(user.Role == (int)UserEnum.Customer)
+                var curr_password = md.Password;
+                md.Password = Password.encryption(curr_password);
+                HttpResponseMessage res = await client.PostAsJsonAsync("api/user/verifyUser", md);
+                var result = res.Content.ReadAsStringAsync().Result;
+                if (result == "")
                 {
-                    return RedirectToAction("Index", "Home");
-
-                } else if(user.Role == (int)UserEnum.Admin)
-                {
-                    return RedirectToAction("Index", "Admin");
-
-                } else if(user.Role == (int)UserEnum.Staff){
-                    return RedirectToAction("Index", "Staff");
+                    ModelState.AddModelError("Global", "Invalid User");
                 }
-               
+                else
+                {
+                    User user = new User();
+                    user = JsonConvert.DeserializeObject<User>(result);
+                    HttpContext.Session.SetInt32("userId", user.UserId);
+                    HttpContext.Session.SetInt32("role", user.Role);
+                    if (user.Role == (int)UserEnum.Customer)
+                    {
+                        return RedirectToAction("Index", "Home");
 
+                    }
+                    else if (user.Role == (int)UserEnum.Admin)
+                    {
+                        return RedirectToAction("Index", "Admin");
+
+                    }
+                    else if (user.Role == (int)UserEnum.Staff)
+                    {
+                        return RedirectToAction("Index", "Staff");
+                    }
+
+
+                }
             }
 
             return View();
         }
-       
+
         [HttpPost]
         public async Task<IActionResult> Register(User md)
         {
-             HttpResponseMessage res = await client.GetAsync("api/user/email=" + md.Email);
+            if (ModelState.IsValid)
+            {
+                HttpResponseMessage res = await client.GetAsync("api/user/email=" + md.Email);
             if (res.IsSuccessStatusCode)
             {
                 var exist = res.Content.ReadAsStringAsync().Result;
@@ -93,39 +154,23 @@ namespace DDAC_Project.Controllers
                 else
                 {
                     var curr_password = md.Password;
-                    md.Password = encryption(curr_password);
+                    md.Password = Password.encryption(curr_password);
                     HttpResponseMessage response = await client.PostAsJsonAsync(
-                                   "api/user", md);
+                                   "api/user", UserFactory.Create(md.Role, md));
                     if (!response.IsSuccessStatusCode)
                     {
-                        ModelState.AddModelError("Global", "Failed to register.");
+                        ModelState.AddModelError("Global", await response.Content.ReadAsStringAsync());
                     }
                     else
                     {
                         return View("Login");
                     }
-                 }
+                }
 
             }
-
+            }
             return View();
         }
 
-        public string encryption(String password)
-        {
-            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
-            byte[] encrypt;
-            UTF8Encoding encode = new UTF8Encoding();
-            //encrypt the given password string into Encrypted data  
-            encrypt = md5.ComputeHash(encode.GetBytes(password));
-            StringBuilder encryptdata = new StringBuilder();
-            //Create a new string by using the encrypted data  
-            for (int i = 0; i < encrypt.Length; i++)
-            {
-                encryptdata.Append(encrypt[i].ToString());
-            }
-            return encryptdata.ToString();
-        }
- 
     }
 }

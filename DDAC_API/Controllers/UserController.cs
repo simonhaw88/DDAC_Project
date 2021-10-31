@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,10 +19,63 @@ namespace DDAC_API.Controllers
             _context = context;
         }
 
-        [HttpGet("email={email}")]
-        public  ActionResult<bool> EmailIsExist(string email)
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<User>>> SearchUsers(int role, string email)
         {
-            User user = _context.Users.FirstOrDefault(u => u.Email == email);
+
+            IQueryable<User> users = _context.Users;
+            if (role.ToString() != null)
+            {
+                users = users.Where(a => a.Role == role);
+                if(role == (int)UserEnum.Admin)
+                {
+                    users = users.Include(a => a.Admin.Address);
+                }
+                else if(role == (int)UserEnum.Customer)
+                {
+                    users = users.Include(a => a.Customer.Address);
+                }
+                else if(role == (int)UserEnum.Staff)
+                {
+                    users = users.Include(a => a.Staff.Address);
+                }
+
+            }
+            if(email != null)
+            {
+                users = users.Where(a => a.Email.Contains(email));
+
+            }
+
+            var result = await users.OrderByDescending(e => e.UserId).ToListAsync();
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return result;
+        }
+
+        [HttpDelete("delete/{id}")]
+        public async Task<ActionResult> DeleteUser(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+
+        [HttpGet("email={email}")]
+        public async Task<ActionResult<bool>> EmailIsExist(string email)
+        {
+            User user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
           
             if(user == null)
             {
@@ -32,21 +84,48 @@ namespace DDAC_API.Controllers
             return true;
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<User>> GetUser(int id)
+        {
+            User user = await _context.Users
+                .Include(e => e.Staff.Address)
+                .Include(e=>e.Customer.Address)
+                .Include(e=>e.Admin.Address)
+                .FirstOrDefaultAsync(u => u.UserId == id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return user;
+        }
+
+        [HttpPut("update")]
+        public async Task<ActionResult> PutUser(User user)
+        {
+
+            _context.Update(user);
+
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User usr)
         {
             _context.Users.Add(usr);
             await _context.SaveChangesAsync();
 
-            return Ok();
+            return CreatedAtAction("GetUser", new { id = usr.UserId }, usr);
         }
 
         [HttpPost("verifyUser")]
-        public ActionResult<User> VerifyUser(User usr)
+        public async Task<ActionResult<User>> VerifyUser(User usr)
         {
-            return _context.Users.Where(d => d.Email == usr.Email && d.Password == usr.Password && d.Role == usr.Role).FirstOrDefault();
-            
- 
+            return await _context.Users
+                .Where(d => d.Email == usr.Email && d.Password == usr.Password && d.Role == usr.Role && d.Status == 1)
+                .FirstOrDefaultAsync();
         }
     }
 }

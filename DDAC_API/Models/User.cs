@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc;
-
-namespace DDAC_API.Models
+﻿namespace DDAC_API.Models
 {
     public class User
     {
+        public User()
+        {
+            Status = 1;
+        }
+
         public int UserId { get; set; }
 
         public string Email { get; set; }
@@ -18,6 +15,13 @@ namespace DDAC_API.Models
 
         public int Role { get; set; }
 
-      
+        public int Status { get; set; }
+
+        public Staff Staff { get; set; }
+
+        public Admin Admin { get; set; }
+
+        public Customer Customer { get; set; }
+
     }
 }

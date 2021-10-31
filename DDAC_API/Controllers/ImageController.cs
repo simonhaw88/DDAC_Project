@@ -1,10 +1,6 @@
 ﻿using Amazon.S3;
 using Amazon.S3.Model;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace DDAC_API.Controllers
@@ -21,7 +17,7 @@ namespace DDAC_API.Controllers
 
         }
         
-        [HttpPost("{folder}")]
+        [HttpPost("postImage/{folder}")]
         public async Task<IActionResult> Post(string folder)
         {
             PutObjectResponse result = null;
@@ -37,6 +33,22 @@ namespace DDAC_API.Controllers
                 };
                 result = await this.amazonS3.PutObjectAsync(putRequest);
             }
+            return Ok(result);
+        }
+
+        [HttpDelete("delete/{folder}/{fileName}")]
+        public async Task<IActionResult> DeleteImage(string folder, string fileName)
+        {
+            DeleteObjectResponse result = null;
+             
+                var request = new DeleteObjectRequest()
+                {
+                    BucketName = bucketName + "/" + folder,
+                    Key = fileName,
+                };
+                result = await this.amazonS3.DeleteObjectAsync(request);
+           
+
             return Ok(result);
         }
     }

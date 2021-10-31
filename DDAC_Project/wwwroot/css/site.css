@@ -24,6 +24,14 @@ a {
   border-color: #1861ac;
 }
 
+.nav-bg-colour {
+    background-color: #5264DF;
+}
+
+.nav-blue {
+    color: #5264DF;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
