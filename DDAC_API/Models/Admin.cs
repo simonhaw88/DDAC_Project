@@ -8,6 +8,14 @@ namespace DDAC_API.Models
 {
     public class Admin
     {
+        public Admin()
+        {
+            FirstName = null;
+            LastName = null;
+            ContactNo = 0;
+            DateOfBirth = DateTime.Today;
+            Gender = 0;
+        }
         public int AdminId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

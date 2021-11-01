@@ -1,12 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "jT5Os2UO/ORlISLBDxzr6XqEvXEd5ybNrX7D3IBF03BHw/JUABzCgSuZn5GXEwxUMnniRHfWzpHhjakqrNWGzA==",
+  "dgSpecHash": "LAYe8rivULctHkHlILYAmDNDJM5MbMxG9TN6FMt9nxxIiojtckft2Nw04ae2SQ930gGOyCcnpUjk4tVY9bqHjg==",
   "success": true,
   "projectFilePath": "C:\\Users\\simon\\source\\repos\\DDAC_Project\\DDAC_API\\DDAC_API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\simon\\.nuget\\packages\\amazon.extensions.configuration.systemsmanager\\3.0.0\\amazon.extensions.configuration.systemsmanager.3.0.0.nupkg.sha512",
-    "C:\\Users\\simon\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
-    "C:\\Users\\simon\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\awssdk.appconfig\\3.7.0.52\\awssdk.appconfig.3.7.0.52.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\awssdk.core\\3.7.3.22\\awssdk.core.3.7.3.22.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\awssdk.extensions.netcore.setup\\3.7.1\\awssdk.extensions.netcore.setup.3.7.1.nupkg.sha512",
@@ -96,7 +94,7 @@
     "C:\\Users\\simon\\.nuget\\packages\\system.private.datacontractserialization\\4.3.0\\system.private.datacontractserialization.4.3.0.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\system.private.uri\\4.3.2\\system.private.uri.4.3.2.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\system.reflection\\4.3.0\\system.reflection.4.3.0.nupkg.sha512",
-    "C:\\Users\\simon\\.nuget\\packages\\system.reflection.emit\\4.7.0\\system.reflection.emit.4.7.0.nupkg.sha512",
+    "C:\\Users\\simon\\.nuget\\packages\\system.reflection.emit\\4.3.0\\system.reflection.emit.4.3.0.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\system.reflection.emit.ilgeneration\\4.3.0\\system.reflection.emit.ilgeneration.4.3.0.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\system.reflection.emit.lightweight\\4.3.0\\system.reflection.emit.lightweight.4.3.0.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\system.reflection.extensions\\4.3.0\\system.reflection.extensions.4.3.0.nupkg.sha512",

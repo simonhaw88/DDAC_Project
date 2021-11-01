@@ -52,10 +52,6 @@
               "target": "Package",
               "version": "[3.0.0, )"
             },
-            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
-              "target": "Package",
-              "version": "[8.1.1, )"
-            },
             "Microsoft.AspNet.WebApi.Client": {
               "target": "Package",
               "version": "[5.2.7, )"
@@ -168,14 +164,6 @@
             "Amazon.Extensions.Configuration.SystemsManager": {
               "target": "Package",
               "version": "[3.0.0, )"
-            },
-            "AutoMapper": {
-              "target": "Package",
-              "version": "[10.1.1, )"
-            },
-            "DataAnnotationsExtensions": {
-              "target": "Package",
-              "version": "[5.0.1.27, )"
             },
             "LiveSharp": {
               "target": "Package",

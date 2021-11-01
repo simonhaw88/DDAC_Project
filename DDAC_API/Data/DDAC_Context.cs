@@ -26,10 +26,12 @@ namespace DDAC_API.Data
         public DbSet<Book> Books { get; set; }
         public DbSet<AlbumCategory> AlbumCategorys { get; set; }
         public DbSet<Album> Albums { get; set; }
-
         public DbSet<AlbumPhoto> AlbumPhotos { get; set; }
-
         public DbSet<Track> Tracks { get; set; }
+
+        public DbSet<Order> Orders { get; set; }
+
+        public DbSet<OrderItem> OrderItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -7,6 +7,14 @@ namespace DDAC_API.Models
 {
     public class Address
     {
+        public Address()
+        {
+            Line = null;
+            City = null;
+            Region = null;
+            PostCode = null;
+            Country = null;
+        }
         public int AddressId { get; set; }
         public string Line { get; set; }
         public string City { get; set; }

@@ -1,7 +1,5 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using DataAnnotationsExtensions;
-using Xamarin.Essentials;
 
 namespace DDAC_Project.Models
 {
@@ -16,7 +14,6 @@ namespace DDAC_Project.Models
 
         [Required(ErrorMessage = "Email is Required")]
         [DisplayName("Email Address")]
-        [Email] 
         public string Email { get; set; }
 
         [DisplayName("Password")]

@@ -18,7 +18,7 @@ namespace DDAC_API.Controllers
         {
             _context = context;
         }
-
+        //api/user/search
         [HttpGet("search")]
         public async Task<ActionResult<IEnumerable<User>>> SearchUsers(string email, int role = 0)
         {
@@ -55,7 +55,7 @@ namespace DDAC_API.Controllers
 
             return result;
         }
-
+        //api/user/delete/2
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult> DeleteUser(int id)
         {

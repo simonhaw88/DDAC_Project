@@ -1,12 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "OeEV34vfcTAkt2DXpd4xAlt3Q4RYba427Cgc1k05McobV2KXJck7naFZNyj3f06B3w3k9q9FpK+5HRQmypRfCQ==",
+  "dgSpecHash": "TJxd0bY4tAmJRxT+ullQomy4ApXgweKR2nxJ8QR73kxMjnbx8oRCTESMyXA5vF/3R4QZgUNQ8ATrHXkBYG9zOA==",
   "success": true,
   "projectFilePath": "C:\\Users\\simon\\source\\repos\\DDAC_Project\\DDAC_Project\\DDAC_Project.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\simon\\.nuget\\packages\\amazon.extensions.configuration.systemsmanager\\3.0.0\\amazon.extensions.configuration.systemsmanager.3.0.0.nupkg.sha512",
-    "C:\\Users\\simon\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
-    "C:\\Users\\simon\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\awssdk.appconfig\\3.7.0.52\\awssdk.appconfig.3.7.0.52.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\awssdk.core\\3.7.3.22\\awssdk.core.3.7.3.22.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\awssdk.extensions.netcore.setup\\3.7.1\\awssdk.extensions.netcore.setup.3.7.1.nupkg.sha512",
@@ -14,7 +12,6 @@
     "C:\\Users\\simon\\.nuget\\packages\\awssdk.simplesystemsmanagement\\3.7.4.11\\awssdk.simplesystemsmanagement.3.7.4.11.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\cloudscribe.pagination.models\\1.1.0\\cloudscribe.pagination.models.1.1.0.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\cloudscribe.web.pagination\\3.1.0\\cloudscribe.web.pagination.3.1.0.nupkg.sha512",
-    "C:\\Users\\simon\\.nuget\\packages\\dataannotationsextensions\\5.0.1.27\\dataannotationsextensions.5.0.1.27.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\livesharp\\2.0.20\\livesharp.2.0.20.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\microsoft.aspnet.webapi.client\\5.2.7\\microsoft.aspnet.webapi.client.5.2.7.nupkg.sha512",
@@ -151,7 +148,7 @@
     "C:\\Users\\simon\\.nuget\\packages\\system.private.datacontractserialization\\4.3.0\\system.private.datacontractserialization.4.3.0.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\system.private.uri\\4.3.2\\system.private.uri.4.3.2.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\system.reflection\\4.3.0\\system.reflection.4.3.0.nupkg.sha512",
-    "C:\\Users\\simon\\.nuget\\packages\\system.reflection.emit\\4.7.0\\system.reflection.emit.4.7.0.nupkg.sha512",
+    "C:\\Users\\simon\\.nuget\\packages\\system.reflection.emit\\4.3.0\\system.reflection.emit.4.3.0.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\system.reflection.emit.ilgeneration\\4.3.0\\system.reflection.emit.ilgeneration.4.3.0.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\system.reflection.emit.lightweight\\4.3.0\\system.reflection.emit.lightweight.4.3.0.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\system.reflection.extensions\\4.3.0\\system.reflection.extensions.4.3.0.nupkg.sha512",
@@ -200,16 +197,5 @@
     "C:\\Users\\simon\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\xamarin.essentials\\1.7.0\\xamarin.essentials.1.7.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'DataAnnotationsExtensions 5.0.1.27' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
-      "libraryId": "DataAnnotationsExtensions",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v3.1"
-      ]
-    }
-  ]
+  "logs": []
 }
