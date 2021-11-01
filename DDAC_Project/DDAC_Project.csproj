@@ -6,6 +6,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\NewFolder\**" />
+    <Compile Remove="Views\Staff\**" />
+    <Content Remove="Views\NewFolder\**" />
+    <Content Remove="Views\Staff\**" />
+    <EmbeddedResource Remove="Views\NewFolder\**" />
+    <EmbeddedResource Remove="Views\Staff\**" />
+    <None Remove="Views\NewFolder\**" />
+    <None Remove="Views\Staff\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Amazon.Extensions.Configuration.SystemsManager" Version="3.0.0" />
     <PackageReference Include="AWSSDK.S3" Version="3.7.3.15" />
     <PackageReference Include="cloudscribe.Pagination.Models" Version="1.1.0" />
@@ -25,10 +36,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DDAC_API\DDAC_API.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\Staff\" />
   </ItemGroup>
 
 </Project>

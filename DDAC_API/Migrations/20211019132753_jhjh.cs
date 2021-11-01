@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DDAC_API.Migrations
 {
-    public partial class mgdb : Migration
+    public partial class jhjh : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -56,8 +56,8 @@ namespace DDAC_API.Migrations
                 {
                     UserId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Role = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -78,7 +78,7 @@ namespace DDAC_API.Migrations
                     CountryOfOrigin = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     AlbumCategoryId = table.Column<int>(type: "int", nullable: false),
-                    Artist = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Author = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

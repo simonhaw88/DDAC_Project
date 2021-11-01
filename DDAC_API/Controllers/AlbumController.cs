@@ -29,8 +29,6 @@ namespace DDAC_API.Controllers
         {
             return await _context.Albums.Include(a => a.Tracks).Include(a => a.AlbumCategory).Include(a => a.AlbumPhotos).ToListAsync();
         }
-
-       
         [HttpGet("category/{value}")]
         public async Task<ActionResult<IEnumerable<Album>>> GetAlbumsByCategory( int value)
         {

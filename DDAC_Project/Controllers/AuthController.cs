@@ -21,7 +21,6 @@ namespace DDAC_Project.Controllers
     public class AuthController : Controller
     {
         AuthorAPI _api = new AuthorAPI();
-
         private readonly DDAC_Context _context;
         private HttpClient client;
         public AuthController(DDAC_Context context)

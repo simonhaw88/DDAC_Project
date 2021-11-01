@@ -93,7 +93,7 @@ namespace DDAC_API.Migrations
                     b.Property<int>("AlbumCategoryId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Artist")
+                    b.Property<string>("Author")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CountryOfOrigin")
@@ -293,11 +293,9 @@ namespace DDAC_API.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Role")
@@ -336,13 +334,11 @@ namespace DDAC_API.Migrations
 
             modelBuilder.Entity("DDAC_API.Models.AlbumPhoto", b =>
                 {
-                    b.HasOne("DDAC_API.Models.Album", "Album")
+                    b.HasOne("DDAC_API.Models.Album", null)
                         .WithMany("AlbumPhotos")
                         .HasForeignKey("AlbumId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Album");
                 });
 
             modelBuilder.Entity("DDAC_API.Models.Book", b =>
@@ -386,18 +382,18 @@ namespace DDAC_API.Migrations
 
             modelBuilder.Entity("DDAC_API.Models.Track", b =>
                 {
-                    b.HasOne("DDAC_API.Models.Album", "Album")
-                        .WithMany()
+                    b.HasOne("DDAC_API.Models.Album", null)
+                        .WithMany("Tracks")
                         .HasForeignKey("AlbumId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Album");
                 });
 
             modelBuilder.Entity("DDAC_API.Models.Album", b =>
                 {
                     b.Navigation("AlbumPhotos");
+
+                    b.Navigation("Tracks");
                 });
 
             modelBuilder.Entity("DDAC_API.Models.Author", b =>

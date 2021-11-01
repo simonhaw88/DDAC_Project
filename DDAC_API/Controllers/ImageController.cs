@@ -14,7 +14,7 @@ namespace DDAC_API.Controllers
     public class ImageController : Controller
     {
         private readonly IAmazonS3 amazonS3;
-        private string bucketName = "ddactestbucket";
+        private string bucketName = "mycalvinbucket";
         public ImageController(IAmazonS3 amazonS3)
         {
             this.amazonS3 = amazonS3;
