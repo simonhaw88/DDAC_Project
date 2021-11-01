@@ -39,7 +39,7 @@ namespace DDAC_Project
 
            // services.AddDbContext<DDAC_Context>(options => options.UseSqlServer(connection));
             services.AddSession(options => {
-                options.IdleTimeout = TimeSpan.FromMinutes(1);//You can set Time   
+                options.IdleTimeout = TimeSpan.FromMinutes(120);//You can set Time   
             });
            
         }

@@ -16,14 +16,14 @@
         {
         <form>
             <div class="form-group mt-2 mb-2">
-                @Html.LabelFor(m => m.Email, new { @class = "fw-bold fs-6" })
+                @Html.LabelFor(m => m.Email, new { required = "required", @class = "fw-bold fs-6" })
                 @Html.TextBoxFor(m => m.Email, "", new { @class = "form-control border border-dark mt-1 shadow", @placeholder = "Enter email" })
                 @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
 
             </div>
             <div class="form-group mt-2 mb-2">
                 @Html.LabelFor(m => m.Password, new { @class = "fw-bold fs-6" })
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control border border-dark mt-1 shadow", @placeholder = "Enter password" })
+                @Html.PasswordFor(m => m.Password, new { required = "required", @class = "form-control border border-dark mt-1 shadow", @placeholder = "Enter password" })
                 @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
             </div>
             <div class="form-group mt-2 mb-2">
@@ -31,12 +31,12 @@
                 @Html.DropDownListFor(model => model.Role, new SelectList(Enum.GetValues(typeof(UserEnum)).OfType<UserEnum>().Select(
                 m => new { Text = m.ToString(), Value = (int)m }).ToList(), "Value", "Text"), "Select Role", new { @class = "form-control form-control-sm border border-dark mt-1 shadow" })
                 @Html.ValidationMessageFor(m => m.Role, "", new { @class = "text-danger" })
-                @Html.ValidationMessage("Global", new { @class = "text-danger" })
-
             </div>
+            @Html.ValidationMessage("Global", new { @class = "text-danger" })
+
             <div class="row">
-                     <a class="text-end" asp-controller="Auth" asp-action="forgotpassword">Forgot password?</a>
-             </div>
+                <a class="text-end" asp-controller="Auth" asp-action="forgotpassword">Forgot password?</a>
+            </div>
             <div class="row">
                 <div class="d-flex p-2 m-1 justify-content-center md-2">
                     <button type="submit" class="btn rounded rounded-3 nav-bg-colour text-white fs-4 shadow-lg col col-7 mt-4">Submit</button>
