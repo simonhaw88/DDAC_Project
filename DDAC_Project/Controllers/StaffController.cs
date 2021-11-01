@@ -16,14 +16,12 @@ namespace DDAC_Project.Controllers
     {
         ApiHelper _api = new ApiHelper();
         private HttpClient client;
-        private readonly DDAC_Context _context;
         private readonly string seassion_userId = "userId";
         private readonly string seassion_role = "role";
 
-        public StaffController(DDAC_Context context)
+        public StaffController()
         {
             client = _api.Initial();
-            _context = context;
         }
 
         public IActionResult Index()

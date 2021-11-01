@@ -17,14 +17,12 @@ namespace DDAC_Project.Controllers
     {
         ApiHelper _api = new ApiHelper();
         private HttpClient client;
-        private readonly DDAC_Context _context;
         private readonly string seassion_userId = "userId";
         private readonly string seassion_role = "role";
 
-        public AlbumController(DDAC_Context context)
+        public AlbumController()
         {
             client = _api.Initial();
-            _context = context;
         }
         [HttpGet("album/delete/{id}")]
         public async Task<IActionResult> Delete(int id)

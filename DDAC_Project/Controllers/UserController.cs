@@ -14,14 +14,11 @@ namespace DDAC_Project.Controllers
     {
         ApiHelper _api = new ApiHelper();
         private HttpClient client;
-        private readonly DDAC_Context _context;
         private readonly string seassion_userId = "userId";
-        private readonly string seassion_role = "role";
 
-        public UserController(DDAC_Context context)
+        public UserController()
         {
             client = _api.Initial();
-            _context = context;
         }
 
         [HttpGet]

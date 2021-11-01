@@ -29,14 +29,15 @@ namespace DDAC_Project
             services.AddControllersWithViews()
                 .AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-            ); services.AddCloudscribePagination();
-            var builder = new SqlConnectionStringBuilder(
-             Configuration.GetConnectionString("BooksConnection"));
-            builder.Password = Configuration["DbPassword"];
-            builder.UserID = Configuration["DbUser"];
-            var connection = builder.ConnectionString;
+            );
+            services.AddCloudscribePagination();
+           // var builder = new SqlConnectionStringBuilder(
+            // Configuration.GetConnectionString("BooksConnection"));
+           // builder.Password = Configuration["DbPassword"];
+           // builder.UserID = Configuration["DbUser"];
+           // var connection = builder.ConnectionString;
 
-            services.AddDbContext<DDAC_Context>(options => options.UseSqlServer(connection));
+           // services.AddDbContext<DDAC_Context>(options => options.UseSqlServer(connection));
             services.AddSession(options => {
                 options.IdleTimeout = TimeSpan.FromMinutes(1);//You can set Time   
             });
