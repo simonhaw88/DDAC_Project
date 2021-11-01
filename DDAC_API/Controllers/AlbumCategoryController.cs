@@ -11,7 +11,7 @@ namespace DDAC_API.Controllers
     [ApiController]
     public class AlbumCategoryController : Controller
     {
-        private readonly DDAC_Context _context;
+        private readonly DDAC_Context _context; 
 
         public AlbumCategoryController(DDAC_Context context)
         {   
