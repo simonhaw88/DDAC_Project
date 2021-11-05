@@ -11,7 +11,7 @@ namespace DDAC_API.Models
             LastName = null;
             ContactNo = 0;
             DateOfBirth = DateTime.Today;
-            Gender = 0;
+            Gender = 1;
         }
         public int CustomerId { get; set; }
         public string FirstName { get; set; }

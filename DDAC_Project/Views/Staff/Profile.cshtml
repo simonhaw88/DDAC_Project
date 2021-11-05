@@ -15,10 +15,14 @@
         </label>
     </div>
 </div>
-<div id="msgBox" class="container d-none mt-4">
-    <div id="msg" class="alert alert-success">
+<div id="msgBox" class="container mt-4">
+    <div id="msg-success" class="alert alert-success d-none">
         @Html.ValidationMessage("success", new { @class = "success-msg text-success" })
     </div>
+    <div id="msg-fail" class="alert alert-danger d-none">
+        @Html.ValidationMessage("fail", new { @class = "fail-msg text-danger" })
+    </div>
+
 </div>
 <div class="row mt-2 mb-2">
     <div class="col">

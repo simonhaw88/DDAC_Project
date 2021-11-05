@@ -2,7 +2,7 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-light nav-bg-colour" style='position:sticky;top:0;z-index:100;'>
         <div class="container-fluid">
-            <a class="navbar-brand text-white fs-3 bolder" asp-area="" asp-controller="Home" asp-action="Index">DDAC_Project</a>
+            <a class="navbar-brand text-white fs-3 bolder" asp-area="" style="font-family:Rockwell;" asp-controller="Home" asp-action="Index">SoundMart</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -12,7 +12,21 @@
                     <li class="nav-item p-2 ">
                         <a class="nav-link text-white @(ViewBag.Url == "Home" ? "nav-active" : "")" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
-
+                    <li class="nav-item p-2 ">
+                        <a class="nav-link text-white @(ViewBag.Url == "Cart" ? "nav-active" : "")" asp-area="" asp-controller="Cart" asp-action="Index">Shopping Cart</a>
+                    </li>
+                    <li class="nav-item p-2 ">
+                        <a class="nav-link text-white @(ViewBag.Url == "My Order" ? "nav-active" : "")" asp-area="" asp-controller="Order" asp-action="History">My Orders</a>
+                    </li>
+                    <li class="nav-item p-2 dropdown ">
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Account
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Profile">Manage Profile</a></li>
+                            <li><a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Password">Change Password</a></li>
+                        </ul>
+                    </li>
                 </ul>
 
                 @if (Context.Session.GetInt32("userId") != null)

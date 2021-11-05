@@ -10,7 +10,16 @@ namespace DDAC_API.Models
     {
         public int OrderId { get; set; }
 
+        [Column(TypeName = "Date")]
+
         public DateTime CreatedDate { get; set; }
+
+        public int Status { get; set; }
+        public string Line { get; set; }
+        public string City { get; set; }
+        public string Region { get; set; }
+        public int PostCode { get; set; }
+        public string Country { get; set; }
 
         [ForeignKey("Customer")]
         public int CustomerId { get; set; }
@@ -19,6 +28,5 @@ namespace DDAC_API.Models
 
         public List<OrderItem> OrderItems { get; set; }
 
-        public Payment Payment { get; set; }
     }
 }

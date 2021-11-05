@@ -17,23 +17,23 @@
             @Html.HiddenFor(m => m.AlbumId)
             <div class="form-group mt-2 mb-2">
                 @Html.LabelFor(m => m.Name, new { @class = "fw-bold fs-6" })
-                @Html.TextBoxFor(m => m.Name, "", new { @class = "form-control border border-dark mt-1 shadow", @placeholder = "Enter album's name" })
+                @Html.TextBoxFor(m => m.Name, "", new { required = "Required", @class = "form-control border border-dark mt-1 shadow", @placeholder = "Enter album's name" })
                 @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
             </div>
             <div class="form-group mt-2 mb-2">
                 @Html.LabelFor(m => m.Description, new { @class = "fw-bold fs-6" })
-                @Html.TextAreaFor(m => m.Description, new { @class = "form-control border border-dark mt-1 shadow", @placeholder = "Enter album's description" })
+                @Html.TextAreaFor(m => m.Description, new { required = "Required", @class = "form-control border border-dark mt-1 shadow", @placeholder = "Enter album's description" })
                 @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
             </div>
             <div class="form-group mt-2 mb-2">
                 @Html.LabelFor(m => m.Price, new { @class = "fw-bold fs-6" })
-                @Html.TextBoxFor(m => m.Price, "", new { @type = "number", @step = "0.01", @class = "form-control border border-dark mt-1 shadow", @placeholder = "Enter album's price" })
+                @Html.TextBoxFor(m => m.Price, "", new { required = "Required", @type = "number", @step = "0.01", @class = "form-control border border-dark mt-1 shadow", @placeholder = "Enter album's price" })
                 @Html.ValidationMessageFor(m => m.Price, "", new { @class = "text-danger" })
             </div>
 
             <div class="form-group mt-2 mb-2">
                 @Html.LabelFor(m => m.Stock, new { @class = "fw-bold fs-6" })
-                @Html.TextBoxFor(m => m.Stock, "", new { @type = "number", @class = "form-control border border-dark mt-1 shadow", @placeholder = "Enter album's stock" })
+                @Html.TextBoxFor(m => m.Stock, "", new { required = "Required", @type = "number", @class = "form-control border border-dark mt-1 shadow", @placeholder = "Enter album's stock" })
                 @Html.ValidationMessageFor(m => m.Stock, "", new { @class = "text-danger" })
             </div>
             <div class="form-group mt-2 mb-2">
@@ -70,7 +70,7 @@
             </div>
             <div class="form-group mt-2 mb-2">
                 @Html.LabelFor(m => m.Author, new { @class = "fw-bold fs-6" })
-                @Html.TextBoxFor(m => m.Author, "", new { @class = "form-control border border-dark mt-1 shadow", @placeholder = "Enter artist's name" })
+                @Html.TextBoxFor(m => m.Author, "", new { required = "Required", @class = "form-control border border-dark mt-1 shadow", @placeholder = "Enter artist's name" })
                 @Html.ValidationMessageFor(m => m.Author, "", new { @class = "text-danger" })
             </div>
             <div class="form-group mt-2 mb-2">

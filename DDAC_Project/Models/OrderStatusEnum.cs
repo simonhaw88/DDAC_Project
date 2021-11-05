@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 
 namespace DDAC_Project.Models
 {
-    public class Book
+    public enum OrderStatusEnum
     {
-        public int BookId { get; set; }
-        public int AuthorId { get; set; }
-        public string Title { get; set; }
+        Unpaid = 1,
+        Paid = 2,
+        Shipped = 3,
+        Completed = 4,
+        Cancelled = 5
     }
 }

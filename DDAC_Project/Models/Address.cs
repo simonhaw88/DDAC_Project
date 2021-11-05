@@ -21,7 +21,7 @@ namespace DDAC_Project.Models
 
         [Required(ErrorMessage = "PostCode is Required")]
         [DisplayName("Post Code")]
-        public string PostCode { get; set; }
+        public int PostCode { get; set; }
 
         [Required(ErrorMessage = "Country is Required")]
         [DisplayName("Country")]

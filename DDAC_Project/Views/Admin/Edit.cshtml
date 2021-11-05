@@ -14,11 +14,7 @@
         @using (Html.BeginForm("PostEdit", "Admin", FormMethod.Post))
         {
             @Html.HiddenFor(m => m.UserId)
-            <div class="form-group mt-2 mb-2">
-                @Html.LabelFor(m => m.Email, new { @class = "fw-bold fs-6" })
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control border border-dark mt-1 shadow", @placeholder = "Enter email address" })
-                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-            </div>
+            @Html.HiddenFor(m => m.Email)
             <div class="form-group mt-2 mb-2">
                 @Html.LabelFor(m => m.Admin.FirstName, new { @class = "fw-bold fs-6" })
                 @Html.TextBoxFor(m => m.Admin.FirstName, "", new { @class = "form-control border border-dark mt-1 shadow", @placeholder = "Enter first name" })

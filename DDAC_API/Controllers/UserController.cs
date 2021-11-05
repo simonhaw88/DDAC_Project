@@ -18,10 +18,48 @@ namespace DDAC_API.Controllers
         {
             _context = context;
         }
+
+        [HttpGet("count_user")]
+        public ActionResult<int> CountUser(string email, int role = 0)
+        {
+            IQueryable<User> users = _context.Users;
+            if (role != 0)
+            {
+                users = users.Where(a => a.Role == role);
+                if (role == (int)UserEnum.Admin)
+                {
+                    users = users.Include(a => a.Admin.Address);
+                }
+                else if (role == (int)UserEnum.Customer)
+                {
+                    users = users.Include(a => a.Customer.Address);
+                }
+                else if (role == (int)UserEnum.Staff)
+                {
+                    users = users.Include(a => a.Staff.Address);
+                }
+
+            }
+            if (email != null)
+            {
+                users = users.Where(a => a.Email.Contains(email));
+
+            }
+
+            var result = users.OrderByDescending(e => e.UserId).Count();
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return result;
+        }
+
         //api/user/search
         [HttpGet("search")]
-        public async Task<ActionResult<IEnumerable<User>>> SearchUsers(string email, int role = 0)
+        public async Task<ActionResult<IEnumerable<User>>> SearchUsers(string email, int role = 0, int pageNumber = 1, int pageSize = 15)
         {
+            int excludeRecords = (pageSize * pageNumber) - pageSize;
 
             IQueryable<User> users = _context.Users;
             if (role != 0)
@@ -47,7 +85,8 @@ namespace DDAC_API.Controllers
 
             }
 
-            var result = await users.OrderByDescending(e => e.UserId).ToListAsync();
+            var result = await users.OrderByDescending(e => e.UserId).Skip(excludeRecords).
+                Take(pageSize).ToListAsync();
             if (result == null)
             {
                 return NotFound();

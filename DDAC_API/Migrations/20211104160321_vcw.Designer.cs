@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DDAC_API.Migrations
 {
     [DbContext(typeof(DDAC_Context))]
-    [Migration("20211101081643_fjibif")]
-    partial class fjibif
+    [Migration("20211104160321_vcw")]
+    partial class vcw
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,8 +37,8 @@ namespace DDAC_API.Migrations
                     b.Property<string>("Line")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PostCode")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("PostCode")
+                        .HasColumnType("int");
 
                     b.Property<string>("Region")
                         .HasColumnType("nvarchar(max)");
@@ -46,6 +46,17 @@ namespace DDAC_API.Migrations
                     b.HasKey("AddressId");
 
                     b.ToTable("Address");
+
+                    b.HasData(
+                        new
+                        {
+                            AddressId = 1,
+                            City = "Kuala Lumpur",
+                            Country = "Malaysia",
+                            Line = "B-1-19，Desa Gembira Condo No. 6，Jalan 1 / 127A Off Jalan Kuchai Lama，58200 Kuala Lumpur",
+                            PostCode = 58200,
+                            Region = "Asia"
+                        });
                 });
 
             modelBuilder.Entity("DDAC_API.Models.Admin", b =>
@@ -84,6 +95,19 @@ namespace DDAC_API.Migrations
                         .IsUnique();
 
                     b.ToTable("Admins");
+
+                    b.HasData(
+                        new
+                        {
+                            AdminId = 1,
+                            AddressId = 1,
+                            ContactNo = 1699885450,
+                            DateOfBirth = new DateTime(2021, 11, 5, 0, 0, 0, 0, DateTimeKind.Local),
+                            FirstName = "simon",
+                            Gender = 1,
+                            LastName = "Haw",
+                            UserId = 1
+                        });
                 });
 
             modelBuilder.Entity("DDAC_API.Models.Album", b =>
@@ -137,6 +161,58 @@ namespace DDAC_API.Migrations
                     b.HasKey("AlbumCategoryId");
 
                     b.ToTable("AlbumCategorys");
+
+                    b.HasData(
+                        new
+                        {
+                            AlbumCategoryId = 1,
+                            Name = "Jazz"
+                        },
+                        new
+                        {
+                            AlbumCategoryId = 2,
+                            Name = "New Age"
+                        },
+                        new
+                        {
+                            AlbumCategoryId = 3,
+                            Name = "Pop"
+                        },
+                        new
+                        {
+                            AlbumCategoryId = 4,
+                            Name = "Punk & Hardcore"
+                        },
+                        new
+                        {
+                            AlbumCategoryId = 5,
+                            Name = "R&B"
+                        },
+                        new
+                        {
+                            AlbumCategoryId = 6,
+                            Name = "Reggae"
+                        },
+                        new
+                        {
+                            AlbumCategoryId = 7,
+                            Name = "Soundtracks"
+                        },
+                        new
+                        {
+                            AlbumCategoryId = 8,
+                            Name = "Urban"
+                        },
+                        new
+                        {
+                            AlbumCategoryId = 9,
+                            Name = "Vinyl"
+                        },
+                        new
+                        {
+                            AlbumCategoryId = 10,
+                            Name = "World Music"
+                        });
                 });
 
             modelBuilder.Entity("DDAC_API.Models.AlbumPhoto", b =>
@@ -159,39 +235,32 @@ namespace DDAC_API.Migrations
                     b.ToTable("AlbumPhotos");
                 });
 
-            modelBuilder.Entity("DDAC_API.Models.Author", b =>
+            modelBuilder.Entity("DDAC_API.Models.CartItem", b =>
                 {
-                    b.Property<int>("AuthorId")
+                    b.Property<int>("CartItemId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("AuthorId");
-
-                    b.ToTable("Authors");
-                });
-
-            modelBuilder.Entity("DDAC_API.Models.Book", b =>
-                {
-                    b.Property<int>("BookId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AuthorId")
+                    b.Property<int>("AlbumId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
 
-                    b.HasKey("BookId");
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
-                    b.HasIndex("AuthorId");
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
 
-                    b.ToTable("Books");
+                    b.HasKey("CartItemId");
+
+                    b.HasIndex("AlbumId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("DDAC_API.Models.Customer", b =>
@@ -239,10 +308,28 @@ namespace DDAC_API.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("Date");
 
                     b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Line")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PostCode")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Region")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.HasKey("OrderId");
@@ -396,6 +483,17 @@ namespace DDAC_API.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            Email = "admin@gmail.com",
+                            Password = "1292201552198220877194054219216496220885",
+                            Role = 3,
+                            SecurityAns = "apple",
+                            Status = 1
+                        });
                 });
 
             modelBuilder.Entity("DDAC_API.Models.Admin", b =>
@@ -439,13 +537,23 @@ namespace DDAC_API.Migrations
                     b.Navigation("Album");
                 });
 
-            modelBuilder.Entity("DDAC_API.Models.Book", b =>
+            modelBuilder.Entity("DDAC_API.Models.CartItem", b =>
                 {
-                    b.HasOne("DDAC_API.Models.Author", null)
-                        .WithMany("Books")
-                        .HasForeignKey("AuthorId")
+                    b.HasOne("DDAC_API.Models.Album", "Album")
+                        .WithMany()
+                        .HasForeignKey("AlbumId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("DDAC_API.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Album");
+
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("DDAC_API.Models.Customer", b =>
@@ -541,11 +649,6 @@ namespace DDAC_API.Migrations
                     b.Navigation("AlbumPhotos");
 
                     b.Navigation("Tracks");
-                });
-
-            modelBuilder.Entity("DDAC_API.Models.Author", b =>
-                {
-                    b.Navigation("Books");
                 });
 
             modelBuilder.Entity("DDAC_API.Models.Order", b =>

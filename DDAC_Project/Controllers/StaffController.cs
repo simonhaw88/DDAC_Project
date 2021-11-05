@@ -5,6 +5,7 @@ using DDAC_Project.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -32,8 +33,9 @@ namespace DDAC_Project.Controllers
             {
                 return RedirectToAction("Login", "Auth");
             }
-            ViewBag.Url = "Home";
-            return View();
+            ViewBag.Url = "Order";
+
+            return RedirectToAction("Search", "Order");
         }
 
         public async Task<IActionResult> Edit(int id)
@@ -190,19 +192,27 @@ namespace DDAC_Project.Controllers
 
             List<User> users = new List<User>();
             int pageSize = 15;
-            int ExcludeRecords = (pageSize * pageNumber) - pageSize;
-            HttpResponseMessage responseStaffs = await client.GetAsync("api/user/search?role=" +(int)UserEnum.Staff + "&email=" + value);
-            
+            HttpResponseMessage responseStaffs = await client.GetAsync("api/user/search?pageSize=" + pageSize + "&pageNumber="+ pageNumber + "&role=" +(int)UserEnum.Staff + "&email=" + value);
             if (responseStaffs.IsSuccessStatusCode)
             {
                 var result = responseStaffs.Content.ReadAsStringAsync().Result;
                 users = JsonConvert.DeserializeObject<List<User>>(result);
  
             }
-            ViewBag.users = users.Skip(ExcludeRecords).Take(pageSize);
+
+            int count_user = 0;
+            //count user
+            HttpResponseMessage responseCountStaffs = await client.GetAsync("api/user/count_user?role=" + (int)UserEnum.Staff + "&email=" + value);
+            if (responseCountStaffs.IsSuccessStatusCode)
+            {
+                var result = responseCountStaffs.Content.ReadAsStringAsync().Result;
+                count_user = Convert.ToInt32(result); 
+
+            }
+            ViewBag.users = users;
             ViewBag.pageNumber = pageNumber;
             ViewBag.pageSize = pageSize;
-            ViewBag.totalItems = users.Count;
+            ViewBag.totalItems = count_user;
             ViewBag.Url = "Staff";
 
             var fail = TempData["fail"];

@@ -1,0 +1,94 @@
+﻿@model List<DDAC_Project.Models.CartItem>
+
+@{
+}
+@section Css {
+    <link href="~/css/order/index.css" type="text/css" rel="stylesheet" />
+}
+
+@section Scripts {
+    <script src="~/js/order/checkout.js"></script>
+    <script src="~/js/show_hide_msgbox.js"></script>
+}
+<div id="msgBox" class="container mt-4">
+    <div id="msg-success" class="alert alert-success d-none">
+        @Html.ValidationMessage("success", new { @class = "success-msg text-success" })
+    </div>
+    <div id="msg-fail" class="alert alert-danger d-none">
+        @Html.ValidationMessage("fail", new { @class = "fail-msg text-danger" })
+    </div>
+</div>
+
+<div class="row mt-3 border-bottom border-2">
+    <p class="fs-2 fw-bold">Shopping Cart</p>
+</div>
+
+<div class="container shadow-lg rounded rounded-5 p-3 mt-2">
+    <label class="fw-bold fs-4 pt-2 pb-2">Product(s) Ordered</label>
+    @{ using (Html.BeginForm("PostCheckout", "Order", FormMethod.Post, new { id = "checkoutForm" }))
+        {
+            <div class="table-responsive">
+                <table class="table ">
+                    <thead class="text-center mb-4">
+                            <tr>
+                                <th scope="col" style="width:5px;">Select</th>
+                                <th scope="col" style="width:100px;">Image</th>
+                                <th scope="col" class="order-product">Product</th>
+                                <th scope="col" class="order-quantity">Quantity</th>
+                                <th scope="col" class="order-price">Price</th>
+                                <th scope="col" class="order-subtotal">Subtotal</th>
+                                <th scope="col"  style="width:5px;">Action</th>
+
+                            </tr>
+                    </thead>
+                    <tbody class="text-center">
+
+                        @for (int i = 0; i < Model.Count; i++)
+                        {
+                            @Html.HiddenFor(m => Model[i].CartItemId)
+                            @Html.HiddenFor(m => Model[i].Quantity)
+                            @Html.HiddenFor(m => Model[i].Price)
+                            @Html.HiddenFor(m => Model[i].AlbumId)
+                            <tr>
+                                <th scope="row">
+                                    @Html.CheckBoxFor(m => Model[i].IsSelected, new { @class = "select_cart_item" })
+                                </th>
+                                <td>
+                                    <img alt="100%x280" class="order-img" src=@(ViewBag.imgBaseUrl + "album/" + Model[i].Album.AlbumPhotos[0].Name)>
+                                </td>
+                                <td class="order-product ">
+                                    <p class="pt-3 product-name-wrap text--overflow">@Model[i].Album.Name</p>
+                                </td>
+                                <td class="order-quantity just">
+                                    <p class=" s-5 pt-4" data-value=@Model[i].Quantity>X @Model[i].Quantity</p>
+                                </td>
+                                <td class="order-price">
+                                    <p class=" product-name-wrap pt-4 text--overflow" data-value=@Model[i].Price>RM @Model[i].Price</p>
+                                </td>
+                                <td class="order-subtotal">
+                                    <p class="product-name-wrap pt-4 text--overflow">RM @(Model[i].Price * Model[i].Quantity)</p>
+                                </td>
+                                <td>
+                                    <a data-id=@Model[i].CartItemId data-url="/cart/remove/" class="btn btn-danger mt-4 remove-cart-item"><i class="fas fa-trash-alt"></i></a>
+
+                                </td>
+                            </tr>
+
+                        }
+                        <tr>
+                            <td colspan="7">
+                                <p class="text-end me-4">Total <span id="total_item">0</span> items : <span class="fs-2 total_amount">RM 0.00 </span></p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row mt-3">
+                <div class="d-flex p-2 m-1 justify-content-center md-2">
+                    <button type="submit" class="btn checkout-submit rounded rounded-3 nav-bg-colour text-white fs-4 shadow-lg col col-7 mt-4">Place Order</button>
+                </div>
+            </div>
+        }
+    }
+</div>
+

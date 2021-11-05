@@ -4,6 +4,9 @@ using DDAC_Project.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -21,9 +24,62 @@ namespace DDAC_Project.Controllers
             client = _api.Initial();
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> Index(string date_filter = null )
         {
+            var userId = HttpContext.Session.GetInt32(seassion_userId);
+            var role = HttpContext.Session.GetInt32(seassion_role);
+            if (!userId.HasValue || role != (int)UserEnum.Admin)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+
+            if (date_filter == null)
+            {
+                date_filter = DateTime.Now.ToString("yyyy-MM-dd"); 
+            }
+            string date_now = DateTime.Now.ToString("yyyy-MM-dd");
+            string time_from = DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd");            
+            //get total sales
+            Double total_sales = 0.0;
+            HttpResponseMessage responseTotalSales = await this.client.GetAsync($"api/order/total_sales?timeFrom={date_filter}&timeTo={date_filter}&orderStatus=2");
+            if (responseTotalSales.IsSuccessStatusCode)
+            {
+                var result = responseTotalSales.Content.ReadAsStringAsync().Result;
+                total_sales = Convert.ToDouble(result);
+            }
+            //get total orders
+            int total_order = 0;
+            HttpResponseMessage responseTotalOrders = await this.client.GetAsync($"api/order/total_orders?timeFrom={date_filter}&timeTo={date_filter}&orderStatus=2");
+            if (responseTotalOrders.IsSuccessStatusCode)
+            {
+                var result = responseTotalOrders.Content.ReadAsStringAsync().Result;
+                total_order = Convert.ToInt32(result);
+            }
+
+            //get total buyers
+            int total_buyers = 0;
+            HttpResponseMessage responseTotalBuyers = await this.client.GetAsync($"api/order/total_buyers?timeFrom={date_filter}&timeTo={date_filter}&orderStatus=2");
+            if (responseTotalBuyers.IsSuccessStatusCode)
+            {
+                var result = responseTotalBuyers.Content.ReadAsStringAsync().Result;
+                total_buyers = Convert.ToInt32(result);
+            }
+
+            //get orders
+            List<Order> orders = new List<Order>();
+            HttpResponseMessage responseGetOrders = await this.client.GetAsync($"api/order/get_orders?timeFrom={time_from}&timeTo={date_now}");
+            if (responseGetOrders.IsSuccessStatusCode)
+            {
+                var result = responseGetOrders.Content.ReadAsStringAsync().Result;
+                orders = JsonConvert.DeserializeObject<List<Order>>(result);
+            }
+            ViewBag.dateFilter = date_filter;
             ViewBag.Url = "Home";
+            ViewBag.TotalSales = total_sales;
+            ViewBag.TotalOrders = total_order;
+            ViewBag.TotalBuyers = total_buyers;
+            ViewBag.Orders = orders.Take(10);
             return View();
         }
 
@@ -56,7 +112,7 @@ namespace DDAC_Project.Controllers
             {
                 return RedirectToAction("Login", "Auth");
             }
-
+            HttpResponseMessage res = await client.GetAsync("api/user/email=" + user.Email);
             User userDb = new User();
             HttpResponseMessage responseAdmin = await this.client.GetAsync("api/user/" + user.UserId);
             if (responseAdmin.IsSuccessStatusCode)
@@ -65,7 +121,7 @@ namespace DDAC_Project.Controllers
                 userDb = JsonConvert.DeserializeObject<User>(result);
 
             }
-            if(userDb != null)
+            if (userDb != null)
             {
                 userDb.Email = user.Email;
                 userDb.Admin.FirstName = user.Admin.FirstName;
@@ -87,6 +143,9 @@ namespace DDAC_Project.Controllers
                 }
             }
             TempData["success"] = "Profile updated successfully!";
+
+
+
 
             return RedirectToAction("Profile");
         }

@@ -1,0 +1,134 @@
+﻿@model DDAC_Project.Models.Order
+@{
+
+}
+
+@section Css {
+<link href="~/css/order/index.css" type="text/css" rel="stylesheet" />
+
+}
+@section Scripts {
+<script src="~/js/order/search.js"></script>
+}
+<div class="row mt-4">
+    <div class="col col-4 p-1 pe-4 mt-4">
+        <form action="/order/search/">
+            <div class="input-group mb-3">
+                <input type="text" name="value" id="order_id_input" class="form-control border border-dark mt-1" placeholder="Search for order ID'">
+                <button type="button" id="search_order_id" data-url="/order/search" class="btn btn-primary mt-1"><i class="fas fa-search"></i></button>
+            </div>
+        </form>
+    </div>
+    <div class="col col-8">
+        <div class="d-flex justify-content-end">
+            <div class="p-1 mt-1">
+                <label>Order's Status:</label>
+                <select class="form-select border border-dark" id="order_status-input">
+                    <option value="0" selected>Order's Status</option>
+                    <option value="1">Unpaid</option>
+                    <option value="2">Paid</option>
+                    <option value="3">Shipped</option>
+                    <option value="4">Completed</option>
+                    <option value="5">Cancelled</option>
+                </select>
+            </div>
+                <div class="p-1">
+                    <label>From:</label>
+                    <input type="date" id="start_date-input" class="form-control border border-dark mt-1" />
+                </div>
+                <div class="p-1">
+                    <label>To:</label>
+                    <input type="date" id="end_date-input" class="form-control border border-dark mt-1" />
+                </div>
+                <div class="p-1 mt-4">
+                    <button type="button" id="filter" data-url="/order/search" class="btn btn-primary">Filter</button>
+                </div>
+            </div>
+        </div>
+</div>
+ 
+<div class="row mt-4 p-2 text-white nav-bg-colour shadow-lg card-rounded">
+    <h3 class="fw-bold">Orders</h3>
+</div>
+
+<div class="container overflow-auto mt-3 p-4 shadow-lg card-rounded" style="height:auto;max-height:700px;">
+
+    <div class="table-responsive">
+        <table class="table ">
+            <thead class="text-center mb-4">
+                <tr>
+                    <th scope="col" style="width:100px;">Image</th>
+                    <th scope="col" class="order-product">Product</th>
+                    <th scope="col" class="order-quantity">Quantity</th>
+                    <th scope="col" class="order-price">Price</th>
+                    <th scope="col" class="order-status">Status</th>
+                    <th scope="col" class="order-address">Address</th>
+                    <th scope="col" class="order-status">Action</th>
+
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                <tr>
+                    <td rowspan="1" colspan="7"></td>
+                </tr>
+                @foreach (var order in ViewBag.Orders)
+                {
+                int totalQuantity = 0;
+                Double amount = 0.0;
+                @foreach (var item in order.OrderItems)
+                {
+                totalQuantity = totalQuantity + item.Quantity;
+                amount = amount + (item.Quantity * item.Price);
+                }
+
+                <tr>
+                    <td rowspan="1" colspan="7" class="ps-3 border border-2 bg-light">
+                        <p class="text-start">@(order.Customer.FirstName + " " + order.Customer.LastName)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <img alt="100%x280" class="order-img" src=@(ViewBag.imgBaseUrl+"album/"+ Uri.EscapeDataString(order.OrderItems[0].Album.AlbumPhotos[0].Name))>
+                    </th>
+                    <td class="order-product">
+                        <p class="order-product pt-3 product-name-wrap text--overflow">@order.OrderItems[0].Album.Name</p>
+                    </td>
+                    <td class="order-quantity">
+                        <p class="order-quantity pt-4">X @totalQuantity</p>
+                    </td>
+                    <td class="order-price">
+                        <p class="order-price product-name-wrap pt-4 text--overflow">RM @amount</p>
+
+                    </td>
+                    <td>
+                        <p class="order-status product-name-wrap pt-4 text--overflow">@(order.Status == 1 ? "Unpaid" : order.Status == 2 ? "Paid" : order.Status == 3 ? "Shipped" : order.Status == 4 ? "Completed" : order.Status == 5 ? "Cancelled" : "Unknown")</p>
+
+                    </td>
+                    <td>
+                        <p class="order-address product-name-wrap pt-4 text--overflow">
+                            @order.Line
+                        </p>
+                    </td>
+                    <td>
+                        <p class="order-action product-name-wrap pt-4 text--overflow fw-bold"><a class="text-decoration-none" asp-controller="Order" asp-action="OrderDetails" asp-route-id=@order.OrderId>Check Details</a></p>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="d-flex justify-content-center mt-5">
+
+    <cs-pager cs-paging-pagenumber=@ViewBag.pageNumber
+              cs-paging-totalitems=@ViewBag.totalItems
+              cs-paging-pagesize=@ViewBag.pageSize
+              cs-pagenumber-param="pagenumber"
+              asp-controller="Order"
+              asp-action="Search"
+              cs-pager-li-current-class="page-item active"
+              cs-pager-li-other-class="page-item"
+              cs-pager-li-non-active-class="page-item disabled"
+              cs-pager-link-current-class="page-link"
+              cs-pager-link-other-class="page-link"></cs-pager>
+</div>

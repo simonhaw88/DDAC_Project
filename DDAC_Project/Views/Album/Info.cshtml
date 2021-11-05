@@ -3,11 +3,15 @@
 }
 @section Scripts {
     <script src="~/js/album/info.js"></script>
+    <script src="~/js/show_hide_msgbox.js"></script>
 }
 <div class="container mt-4">
+    <div id="msgBox" class="container d-none">
+        <div id="msg" class="alert alert-success"></div>
+    </div>
     <div class="row p-4 border border-1 shadow">
         <div class="col col-5">
-            <img class="img-fluid" src=@(ViewBag.imgBaseUrl+"album/"+ ViewBag.Albums.AlbumPhotos[0].Name)>
+            <img class="img-fluid" style="width: 400px; height: 420px;" src=@(ViewBag.imgBaseUrl+"album/"+ ViewBag.Albums.AlbumPhotos[0].Name)>
         </div>
         <div class="col col-7">
             <p class="fs-4 fw-bold">@ViewBag.Albums.Name</p>
@@ -30,13 +34,13 @@
                                 <span class="fa fa-minus"></span>
                             </button>
                         </span>
-                        <input type="text" name="quantity" style="width:60px;" class="form-control input-number" value="1" min="1" max=@ViewBag.Albums.Stock>
+                        <input type="text" id="quantity_input" name="quantity" style="width:60px;" class="form-control input-number" value="1" min="1" max=@ViewBag.Albums.Stock>
                         <span class="input-group-append">
                             <button type="button" class="btn btn-outline-secondary btn-number" data-type="plus" data-field="quantity">
                                 <span class="fa fa-plus"></span>
                             </button>
                         </span>
-                        <span class="p-2">@ViewBag.Albums.Stock piece available</span>
+                        <span class="p-2"><span class=" stock">@ViewBag.Albums.Stock </span>piece available</span>
 
                     </div>
                 </div>
@@ -44,8 +48,19 @@
 
             <div class="d-flex flex-row bd-highlight mb-2">
                 <div class="p-2 bd-highlight">
-                    <div class="btn btn-lg btn-warning fw-bold me-3 @(ViewBag.Albums.Stock == 0 ? "disabled" : "")"  style="width:200px;">Add To Cart</div>
-                    <div class="btn btn-lg btn-success fw-bold @(ViewBag.Albums.Stock == 0 ? "disabled" : "")" style="width:200px;">Buy Now</div>
+                    <a id="add_to_cart"
+                       class="btn btn-lg btn-warning fw-bold me-3 @(ViewBag.Albums.Stock == 0 ? "disabled" : "")" 
+                       data-url="/cart/addtocart" 
+                       data-login="/Auth/Login"
+                       data-id=@ViewBag.Albums.AlbumId
+                       style="width:200px;">Add To Cart</a>
+                    
+                    <a id="checkout" data-url="/cart/addtocart" 
+                       data-redirect="/cart/index"
+                       data-login="/Auth/Login"
+                       data-id=@ViewBag.Albums.AlbumId 
+                       class="btn btn-lg btn-success fw-bold @(ViewBag.Albums.Stock == 0 ? "disabled" : "") " 
+                       style="width:200px;">Buy Now</a>
                 </div>
             </div>
         </div>
@@ -86,7 +101,7 @@
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Track</th>
-                     
+
                 </tr>
             </thead>
             <tbody>

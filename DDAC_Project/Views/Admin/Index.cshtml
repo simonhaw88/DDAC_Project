@@ -1,1 +1,94 @@
-﻿ 
+﻿@model DDAC_Project.Models.Order
+@{
+
+}
+
+@section Css {
+    <link href="~/css/admin/index.css" type="text/css" rel="stylesheet" />
+}
+
+@section Scripts {
+    <script src="~/js/admin/index.js"></script>
+}
+<div class="row mt-3 p-2 text-white nav-bg-colour shadow-lg card-rounded">
+    <h3 class="fw-bold">Business Insights</h3>
+</div>
+<div class="container mt-2 p-3 shadow-lg card-rounded"> 
+    <div class="row mb-2 justify-content-end ">
+        <div class="col col-8">
+            <input type="date" id="insight-date-input" value=@ViewBag.dateFilter class="form-control border border-dark mt-1 shadow" />
+        </div>
+        <div class="col col-3 pt-1">
+            <button type="button" id="insight-date-filter" data-url="/admin" class="btn btn-primary">Search</button>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <div class="insight-card border-end">
+            <p class="text-center fw-bold p-3 fs-5">Total Sales</p>
+            <p class="text-center fw-bold fs-1 total-sales">RM @ViewBag.TotalSales</p>
+        </div>
+        <div class="insight-card border-end">
+            <p class="text-center fw-bold p-3 fs-5">Total Orders (Paid)</p>
+            <p class="text-center fw-bold fs-1 total-orders">@ViewBag.TotalOrders</p>
+        </div>
+        <div class="insight-card">
+            <p class="text-center fw-bold p-3 fs-5">Total Buyers</p>
+            <p class="text-center fw-bold fs-1 total-buyers">@ViewBag.TotalBuyers</p>
+        </div>
+    </div>
+
+</div>
+
+<div class="row mt-4 p-2 text-white nav-bg-colour shadow-lg card-rounded">
+    <h3 class="fw-bold">Orders</h3>
+</div>
+<div class="container overflow-auto mt-3 p-3 shadow-lg card-rounded" style="height:auto;max-height:500px;">
+    <div class="row mb-2">
+        <a class="text-end pe-5" asp-controller="Order" asp-action="Search">More Orders</a>
+    </div>
+    <div class="table-responsive">
+        <table class="table ">
+            <thead class="text-center">
+                <tr>
+                    <th scope="col">Order ID</th>
+                    <th scope="col">Item</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Created Date</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+
+                </tr>
+            </thead>
+            <tbody class="text-center">
+
+                @foreach (var order in ViewBag.Orders)
+                {
+                    int totalQuantity = 0;
+                    Double amount = 0.0;
+                    @foreach (var item in order.OrderItems)
+                    {
+                        totalQuantity = totalQuantity + item.Quantity;
+                        amount = amount + (item.Quantity * item.Price);
+                    }
+                    <tr>
+                        <th scope="row">@order.OrderId</th>
+                        <td>@order.OrderItems[0].Album.Name</td>
+                        <td>@totalQuantity</td>
+                        <td>RM @amount</td>
+                        <td>@order.CreatedDate.ToString("yyyy-MM-dd")</td>
+                        <td>@(order.Status == 1 ? "Unpaid" : order.Status == 2 ? "Paid" : order.Status == 3 ? "Shipped" : order.Status == 4 ? "Completed" : order.Status == 5 ? "Cancelled" : "Unknown")</td>
+                        <td>
+                            <a class="text-decoration-none" asp-controller="Order" asp-action="OrderDetails" asp-route-id=@order.OrderId><i class="fas fa-eye"></i></a>
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
+

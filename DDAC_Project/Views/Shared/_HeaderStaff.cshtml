@@ -4,7 +4,7 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-light border border-2 nav-bg-colour" style='position:sticky;top:0;z-index:100;'>
         <div class="container-fluid">
-            <a class="navbar-brand text-white fs-3 bolder" asp-area="" asp-controller="Home" asp-action="Index">DDAC_Project</a>
+            <a class="navbar-brand text-white fs-3 bolder" asp-area="" style="font-family:Rockwell;" asp-controller="Order" asp-action="Search">SoundMart</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -12,7 +12,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="ms-3 navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item p-2 ">
-                        <a class="nav-link text-white @(ViewBag.Url == "Home" ? "nav-active" : "")" asp-area="" asp-controller="Staff" asp-action="Index">Home</a>
+                        <a class="nav-link text-white @(ViewBag.Url == "Order" ? "nav-active" : "")" asp-area="" asp-controller="Order" asp-action="Search">Order</a>
                     </li>
                     <li class="nav-item p-2 ">
                         <a class="nav-link text-white  @(ViewBag.Url == "Albums" ? "nav-active" : "")" href="/admin/album/search">Albums</a>

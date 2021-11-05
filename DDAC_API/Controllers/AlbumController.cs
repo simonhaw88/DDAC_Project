@@ -33,11 +33,39 @@ namespace DDAC_API.Controllers
                 .ToListAsync();
         }
 
-       
-        [HttpGet("search")]
-        public async Task<ActionResult<IEnumerable<Album>>> SearchAlbums(string type, string value)
+       [HttpGet("album_count")]
+        public async Task<ActionResult<int>> SearchAlbums(string type, string value)
         {
-             
+            IQueryable<Album> albums = _context.Albums;
+            if (type != null && value != null)
+            {
+                if (type == "name")
+                {
+                    albums = albums.Where(a => a.Name.Contains(value));
+                }
+                else if (type == "category")
+                {
+                    albums = albums.Where(a => a.AlbumCategoryId == Convert.ToInt32(value));
+                }
+
+            }
+
+            var result = albums.
+                Include(a => a.Tracks).
+                Include(a => a.AlbumCategory).
+                Include(a => a.AlbumPhotos).
+                OrderByDescending(e => e.AlbumId)
+                .Count();
+            
+
+            return result;
+
+        }
+
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<Album>>> SearchAlbums(string type, string value, int pageNumber = 1, int pageSize = 15)
+        {
+            int excludeRecords = (pageSize * pageNumber) - pageSize;
             IQueryable<Album> albums = _context.Albums;
             if (type != null && value !=null )
             {
@@ -56,13 +84,14 @@ namespace DDAC_API.Controllers
                 Include(a => a.AlbumCategory).
                 Include(a => a.AlbumPhotos).
                 OrderByDescending(e => e.AlbumId).
+                Skip(excludeRecords).
+                Take(pageSize).
                 ToListAsync();
-
             if (result == null)
             {
                 return NotFound();
             }
-
+ 
             return result;
            
         }

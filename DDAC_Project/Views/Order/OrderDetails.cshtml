@@ -1,0 +1,115 @@
+﻿@model DDAC_Project.Models.Order
+
+@{
+    Order order = ViewBag.Order;
+    string unpaid = "Buyer haven't complete the payment.";
+    string paid = "Buyer has completed the payment.";
+    string shipped = "The order has been shipped by admin.";
+    string completed = "The order has completed";
+    string cancelled = "The order has been cancelled";
+}
+
+@section Css {
+    <link href="~/css/order/details.css" type="text/css" rel="stylesheet" />
+}
+@section Scripts {
+    <script src="~/js/show_hide_msgbox.js"></script>
+}
+
+
+<div class="container mt-4">
+    <div id="msgBox" class="container mt-4">
+        <div id="msg-success" class="alert alert-success d-none">
+            @Html.ValidationMessage("success", new { @class = "success-msg text-success" })
+        </div>
+        <div id="msg-fail" class="alert alert-danger d-none">
+            @Html.ValidationMessage("fail", new { @class = "fail-msg text-danger" })
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col col-9">
+            <div class="row shadow p-4 border border-2">
+                <label class="fs-4 fw-bold">@(order.Status == 1 ? "Unpaid" : order.Status == 2 ? "Paid" : order.Status == 3 ? "Shipped" : order.Status == 4 ? "Completed" : order.Status == 5 ? "Cancelled" : "Unknown")</label>
+                <span class="sub-text">@(order.Status == 1 ? unpaid : order.Status == 2 ? paid : order.Status == 3 ? shipped : order.Status == 4 ? completed: order.Status == 5 ? cancelled : "")</span>
+            </div>
+            <div class="row mt-3 border border-3 shadow p-4">
+                <div class="row pt-1 pb-1">
+                    <label class="fs-5 fw-bold">Order ID</label>
+                    <span class="sub-text pt-1 ">@order.OrderId</span>
+                </div>
+                <div class="row pt-1 pb-1">
+                    <label class="fs-5 fw-bold">Delivery Address</label>
+                    <span class="sub-text pt-1 ">@order.Line</span>
+                </div>
+                <div class="row pt-1 pb-1">
+                    <label class="fs-5 fw-bold">Buyer's Name</label>
+                    <span class="sub-text pt-1 ">@(order.Customer.FirstName + " " + order.Customer.LastName)</span>
+                </div>
+                <div class="row pt-1 pb-1">
+                    <label class="fs-5 fw-bold">Order's Date Creation</label>
+                    <span class="sub-text pt-1 ">@order.CreatedDate</span>
+                </div>
+            </div>
+            <div class="row mt-3 border border-3 shadow p-4">
+                <label class="fs-5 fw-bold">Payment Information</label>
+                <div class="table-responsive">
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">Product(s)</th>
+                                <th scope="col">Unit Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ int loop = 1;
+                                Double amount = 0.0;
+                                foreach (var item in order.OrderItems)
+                                {
+                                    amount = amount + (item.Quantity * item.Price);
+                                    <tr>
+                                        <th scope="row">@loop</th>
+                                        <td>@item.Album.Name</td>
+                                        <td>@item.Price</td>
+                                        <td>@item.Quantity</td>
+                                        <td>@("RM " + item.Price * item.Quantity)</td>
+                                    </tr>
+
+                                    loop++;
+                                }
+                            }
+                            <tr>
+                                <td colspan="5">
+                                    <p class="text-end me-5 pe-4">
+                                        <b>Total : </b> <span class="fs-3 fw-bold nav-blue">RM @amount</span>
+                                    </p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col col-3 p-4 shadow border border-3" style="height:300px;">
+            <form asp-controller="Order" asp-action="UpdateStatus" method="get">
+                <label class="fs-5 fw-bold pt-3 pb-3">
+                    Update Order Status
+                </label>
+                <input type="hidden" name="id" value=@order.OrderId>
+                <select required class="form-select border border-dark" name="status">
+                    <option value="" selected>Select status</option>
+                    <option value="3">Ship</option>
+                    <option value="5">Cancel</option>
+                </select>
+                
+                <div class="d-flex justify-content-center">
+                  <button type="submit" class="mt-4 ps-5 pe-5 btn btn-primary @(order.Status != 2 ? "disabled" : "")">Update</button>  
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

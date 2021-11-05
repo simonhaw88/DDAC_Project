@@ -7,12 +7,12 @@
         "All the command line options for the Lambda command can be specified in this file."
     ],
     "profile"     : "Lambda",
-    "region"      : "ap-southeast-1",
+    "region"      : "us-east-1",
     "configuration" : "Release",
     "framework"     : "netcoreapp3.1",
     "s3-prefix"     : "DDAC_API/",
     "template"      : "serverless.template",
     "template-parameters" : "",
-    "s3-bucket"           : "ddactestbuckethcw",
-    "stack-name"          : "DDACTESTLAMBDA"
+    "s3-bucket"           : "ddacappbuckethcw",
+    "stack-name"          : "DDACLAMBDAHCW"
 }

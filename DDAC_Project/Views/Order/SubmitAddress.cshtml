@@ -1,0 +1,64 @@
+﻿@model DDAC_Project.Models.Order
+
+@{
+}
+
+
+@section Scripts {
+    <script src="~/js/show_hide_msgbox.js"></script>
+}
+
+<div id="msgBox" class="container mt-4">
+    <div id="msg-success" class="alert alert-success d-none">
+        @Html.ValidationMessage("success", new { @class = "success-msg text-success" })
+    </div>
+    <div id="msg-fail" class="alert alert-danger d-none">
+        @Html.ValidationMessage("fail", new { @class = "fail-msg text-danger" })
+    </div>
+</div>
+
+<div class="container p-4 rounded rounded-5 shadow-lg mt-5 border border-3">
+    <div class="container p-3">
+        <div class="row">
+            <h2 class="fw-bolder">Delivery Address</h2>
+        </div>
+    </div>
+
+    @using (Html.BeginForm("PostAddress", "Order", FormMethod.Post, new { @class = "form" }))
+    {
+
+        <div class="form-group mt-2 mb-2">
+            @Html.LabelFor(m => m.Line, new { @class = "fw-bold fs-6" })
+            @Html.TextAreaFor(m => m.Line, new { required = "Required", @class = "form-control border border-dark mt-1 shadow", @placeholder = "Enter address' line" })
+            @Html.ValidationMessageFor(m => m.Line, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group mt-2 mb-2">
+            @Html.LabelFor(m => m.City, new { @class = "fw-bold fs-6" })
+            @Html.TextBoxFor(m => m.City, new { required = "Required", @class = "form-control border border-dark mt-1 shadow", @placeholder = "Enter city" })
+            @Html.ValidationMessageFor(m => m.City, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group mt-2 mb-2">
+            @Html.LabelFor(m => m.Region, new { @class = "fw-bold fs-6" })
+            @Html.TextBoxFor(m => m.Region, "", new { required = "Required", @step = "0.01", @class = "form-control border border-dark mt-1 shadow", @placeholder = "Enter region" })
+            @Html.ValidationMessageFor(m => m.Region, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group mt-2 mb-2">
+            @Html.LabelFor(m => m.PostCode, new { @class = "fw-bold fs-6" })
+            @Html.TextBoxFor(m => m.PostCode, "", new { required = "Required", @type = "number", @class = "form-control border border-dark mt-1 shadow", @placeholder = "Enter album's stock" })
+            @Html.ValidationMessageFor(m => m.PostCode, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group mt-2 mb-2">
+            @Html.LabelFor(m => m.Country, new { @class = "fw-bold fs-6" })
+            @Html.DropDownListFor(model => model.Country, new SelectList(Enum.GetValues(typeof(CountryEnum)).OfType<CountryEnum>().Select(
+                  m => new { Text = m.ToString(), Value = m.ToString() }).ToList(), "Value", "Text"), "Select Country", new { required = "Required", @class = "form-control form-control-sm border border-dark mt-1 shadow" })
+            @Html.ValidationMessageFor(m => m.Country, "", new { @class = "text-danger" })
+        </div>
+        <div class="row mt-3">
+            <div class="d-flex p-2 m-1 justify-content-center md-2">
+                <button type="submit" class="btn rounded rounded-3 nav-bg-colour text-white fs-4 shadow-lg col col-7 mt-4">Submit</button>
+            </div>
+        </div>
+    }
+</div>

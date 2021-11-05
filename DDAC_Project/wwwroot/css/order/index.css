@@ -1,0 +1,43 @@
+﻿.order-img{
+    width:100px;
+    height:100px;
+}
+
+.order-product {
+    width: 180px;
+ }
+
+.order-quantity{
+    width:50px;
+}
+
+.order-price {
+    width: 60px;
+}
+
+.order-status {
+    width: 90px;
+}
+
+.order-address {
+    width: 400px;
+
+}
+
+.order-action {
+    width: 100px;
+}
+
+.order-subtotal{
+    width:60px;
+}
+
+.product-name-wrap {
+    word-wrap: break-word;
+}
+.text--overflow {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}

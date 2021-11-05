@@ -12,14 +12,14 @@ namespace DDAC_API.Models
             Line = null;
             City = null;
             Region = null;
-            PostCode = null;
+            PostCode = 00000;
             Country = null;
         }
         public int AddressId { get; set; }
         public string Line { get; set; }
         public string City { get; set; }
         public string Region { get; set; }
-        public string PostCode { get; set; }
+        public int PostCode { get; set; }
         public string Country { get; set; }
 
     }

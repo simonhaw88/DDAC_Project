@@ -1,4 +1,93 @@
-﻿
+﻿$("#checkout").click(function () {
+    var albumId = $(this).data("id");
+    var quantity = $("#quantity_input").val();
+    var url = $(this).data("url");
+    var redirect_url = $(this).data("redirect");
+    var login_url = $(this).data("login");
+    var msg_box = $("#msgBox");
+    var msg_text = $("#msg");
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: { "albumId": albumId, "quantity": quantity },
+        dataType: 'json',
+        success: function (data) {
+            if (data.status == "success") {
+                var stock = $(".stock").text();
+                $(".stock").text(stock - quantity);
+                msg_text.addClass("alert-success").removeClass("alert-danger");
+                msg_box.fadeIn(500).delay(1500).fadeOut(500, function () {
+                    window.location.replace(redirect_url);
+                });
+               
+            } else if (data.status == "user_invalid") {
+                return window.location.replace(login_url);
+            } else {
+                msg_text.addClass("alert-danger").removeClass("alert-success");
+                msg_box.fadeIn(500).delay(1500).fadeOut(500);
+            }
+            msg_box.removeClass("d-none").css({
+                "position": "sticky",
+                "top": "1%",
+                "font-weight": "bold",
+                "text-align": "center"
+            });
+            msg_text.text(data.message);
+
+            
+        },
+        error: function (xhr) {
+            if (xhr.status == 419) {
+                location.reload();
+            }
+
+        }
+    });
+});
+
+$("#add_to_cart").click(function () {
+    var albumId = $(this).data("id");
+    var quantity = $("#quantity_input").val();
+    var url = $(this).data("url");
+    var login_url = $(this).data("login");
+    var msg_box = $("#msgBox");
+    var msg_text = $("#msg");
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: { "albumId": albumId, "quantity": quantity },
+        dataType: 'json',
+        success: function (data) {
+            if (data.status == "success") {
+                var stock = $(".stock").text();
+                $(".stock").text(stock - quantity);
+                msg_text.addClass("alert-success").removeClass("alert-danger");
+                msg_box.fadeIn(500).delay(1500).fadeOut(500);
+
+            } else if (data.status == "user_invalid") {
+                return window.location.replace(login_url);
+            } else {
+                msg_text.addClass("alert-danger").removeClass("alert-success");
+                msg_box.fadeIn(500).delay(1500).fadeOut(500);
+            }
+            msg_box.removeClass("d-none").css({
+                "position": "sticky",
+                "top": "1%",
+                "font-weight": "bold",
+                "text-align": "center"
+            });
+            msg_text.text(data.message);
+
+        },
+        error: function (xhr) {
+            if (xhr.status == 419) {
+                location.reload();
+            }
+
+        }
+    });
+});
+
 $('.btn-number').click(function (e) {
     e.preventDefault();
 
@@ -68,6 +157,8 @@ $(".input-number").keydown(function (e) {
     if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
         e.preventDefault();
     }
+
+  
 });
 
 

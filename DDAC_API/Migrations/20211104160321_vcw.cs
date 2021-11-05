@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DDAC_API.Migrations
 {
-    public partial class fjibif : Migration
+    public partial class vcw : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,7 +16,7 @@ namespace DDAC_API.Migrations
                     Line = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Region = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PostCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PostCode = table.Column<int>(type: "int", nullable: false),
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -35,19 +35,6 @@ namespace DDAC_API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AlbumCategorys", x => x.AlbumCategoryId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Authors",
-                columns: table => new
-                {
-                    AuthorId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Authors", x => x.AuthorId);
                 });
 
             migrationBuilder.CreateTable(
@@ -90,26 +77,6 @@ namespace DDAC_API.Migrations
                         column: x => x.AlbumCategoryId,
                         principalTable: "AlbumCategorys",
                         principalColumn: "AlbumCategoryId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Books",
-                columns: table => new
-                {
-                    BookId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    AuthorId = table.Column<int>(type: "int", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Books", x => x.BookId);
-                    table.ForeignKey(
-                        name: "FK_Books_Authors_AuthorId",
-                        column: x => x.AuthorId,
-                        principalTable: "Authors",
-                        principalColumn: "AuthorId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -247,12 +214,46 @@ namespace DDAC_API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CartItems",
+                columns: table => new
+                {
+                    CartItemId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<double>(type: "float", nullable: false),
+                    AlbumId = table.Column<int>(type: "int", nullable: false),
+                    CustomerId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CartItems", x => x.CartItemId);
+                    table.ForeignKey(
+                        name: "FK_CartItems_Albums_AlbumId",
+                        column: x => x.AlbumId,
+                        principalTable: "Albums",
+                        principalColumn: "AlbumId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CartItems_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
+                        principalColumn: "CustomerId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
                     OrderId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "Date", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    Line = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Region = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PostCode = table.Column<int>(type: "int", nullable: false),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CustomerId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -318,6 +319,38 @@ namespace DDAC_API.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Address",
+                columns: new[] { "AddressId", "City", "Country", "Line", "PostCode", "Region" },
+                values: new object[] { 1, "Kuala Lumpur", "Malaysia", "B-1-19，Desa Gembira Condo No. 6，Jalan 1 / 127A Off Jalan Kuchai Lama，58200 Kuala Lumpur", 58200, "Asia" });
+
+            migrationBuilder.InsertData(
+                table: "AlbumCategorys",
+                columns: new[] { "AlbumCategoryId", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Jazz" },
+                    { 2, "New Age" },
+                    { 3, "Pop" },
+                    { 4, "Punk & Hardcore" },
+                    { 5, "R&B" },
+                    { 6, "Reggae" },
+                    { 7, "Soundtracks" },
+                    { 8, "Urban" },
+                    { 9, "Vinyl" },
+                    { 10, "World Music" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "UserId", "Email", "Password", "Role", "SecurityAns", "Status" },
+                values: new object[] { 1, "admin@gmail.com", "1292201552198220877194054219216496220885", 3, "apple", 1 });
+
+            migrationBuilder.InsertData(
+                table: "Admins",
+                columns: new[] { "AdminId", "AddressId", "ContactNo", "DateOfBirth", "FirstName", "Gender", "LastName", "UserId" },
+                values: new object[] { 1, 1, 1699885450, new DateTime(2021, 11, 5, 0, 0, 0, 0, DateTimeKind.Local), "simon", 1, "Haw", 1 });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Admins_AddressId",
                 table: "Admins",
@@ -340,9 +373,14 @@ namespace DDAC_API.Migrations
                 column: "AlbumCategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Books_AuthorId",
-                table: "Books",
-                column: "AuthorId");
+                name: "IX_CartItems_AlbumId",
+                table: "CartItems",
+                column: "AlbumId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CartItems_CustomerId",
+                table: "CartItems",
+                column: "CustomerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Customers_AddressId",
@@ -402,7 +440,7 @@ namespace DDAC_API.Migrations
                 name: "AlbumPhotos");
 
             migrationBuilder.DropTable(
-                name: "Books");
+                name: "CartItems");
 
             migrationBuilder.DropTable(
                 name: "OrderItems");
@@ -415,9 +453,6 @@ namespace DDAC_API.Migrations
 
             migrationBuilder.DropTable(
                 name: "Tracks");
-
-            migrationBuilder.DropTable(
-                name: "Authors");
 
             migrationBuilder.DropTable(
                 name: "Orders");

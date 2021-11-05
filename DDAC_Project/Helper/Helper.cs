@@ -11,7 +11,8 @@ namespace DDAC_Project.Helper
         public HttpClient Initial()
         {
             var Client = new HttpClient();
-            Client.BaseAddress = new Uri("https://kq6yw87lq7.execute-api.ap-southeast-1.amazonaws.com/Prod/");
+            //Client.BaseAddress = new Uri("https://localhost:44366/");
+            Client.BaseAddress = new Uri("https://r1y6zb4lrl.execute-api.us-east-1.amazonaws.com/Prod/");
             return Client;
         }
     }

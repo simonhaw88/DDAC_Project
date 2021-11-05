@@ -24,6 +24,8 @@ namespace DDAC_Project.Controllers
         {
             client = _api.Initial();
         }
+
+
         [HttpGet("album/delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -42,14 +44,11 @@ namespace DDAC_Project.Controllers
                 var result = responseGetImage.Content.ReadAsStringAsync().Result;
                 albumPhoto = JsonConvert.DeserializeObject<AlbumPhoto>(result);
                 //delete existing image
-                HttpResponseMessage responseDeleteImage = await this.client.DeleteAsync(
-                                   $"api/image/delete/album/{albumPhoto.Name}");
-
-                if (!responseDeleteImage.IsSuccessStatusCode)
+                var resultDeleteImg = await Image.DeleteImage("album", albumPhoto.Name);
+                if (resultDeleteImg != "success")
                 {
-                    TempData["fail"] = await responseDeleteImage.Content.ReadAsStringAsync();
+                    TempData["fail"] = resultDeleteImg;
                     return RedirectToAction("adminsearchalbum");
-
                 }
             }
             HttpResponseMessage responseDelete = await this.client.DeleteAsync(
@@ -68,6 +67,7 @@ namespace DDAC_Project.Controllers
         [HttpPost("album/postEdit")]
         public async Task<IActionResult> PostEdit(Album ab)
         {
+           
             var userId = HttpContext.Session.GetInt32(seassion_userId);
             var role = HttpContext.Session.GetInt32(seassion_role);
             if (!userId.HasValue || role != (int)UserEnum.Admin && role != (int)UserEnum.Staff)
@@ -113,14 +113,12 @@ namespace DDAC_Project.Controllers
                 {
                     var result = responseGetImage.Content.ReadAsStringAsync().Result;
                     albumPhoto = JsonConvert.DeserializeObject<AlbumPhoto>(result);
-                    //delete existing image from s3 bucket
-                    HttpResponseMessage responseDeleteImage = await this.client.DeleteAsync(
-                                       $"api/image/delete/album/{albumPhoto.Name}");
-                    if (!responseDeleteImage.IsSuccessStatusCode)
+                    //delete existing image
+                    var resultDeleteImg = await Image.DeleteImage("album", albumPhoto.Name);
+                    if (resultDeleteImg != "success")
                     {
-                        TempData["fail"] = await responseDeleteImage.Content.ReadAsStringAsync();
+                        TempData["fail"] = resultDeleteImg;
                         return RedirectToAction("Edit", new { id = ab.AlbumId });
-
                     }
                 }
                 else
@@ -144,19 +142,11 @@ namespace DDAC_Project.Controllers
 
                 }
                 //upload new image to s3 bucket
-                var form = new MultipartFormDataContent();
-                using (var fileStream = ab.FormFile.OpenReadStream())
+                var resultUploadImg = await Image.UploadImage(ab.FormFile, "album", photoName);
+                if (resultUploadImg != "success")
                 {
-                    form.Add(new StreamContent(fileStream), "ab.FormFile", photoName);
-                    using (var response = await this.client.PostAsync("api/image/postImage/album", form))
-                    {
-                        if (!response.IsSuccessStatusCode)
-                        {
-                            TempData["fail"] = await response.Content.ReadAsStringAsync();
-                            return RedirectToAction("Edit", new { id = ab.AlbumId });
-                        }
-                         
-                    }
+                    TempData["fail"] = resultUploadImg;
+                    return RedirectToAction("Edit", new { id = ab.AlbumId });
                 }
             }
             
@@ -219,6 +209,8 @@ namespace DDAC_Project.Controllers
         [HttpGet("admin/album/search")]
         public async Task<IActionResult> AdminSearch(string value, int pageNumber = 1)
         {
+            int pageSize = 15;
+
             var userId = HttpContext.Session.GetInt32(seassion_userId);
             var role = HttpContext.Session.GetInt32(seassion_role);
             if (!userId.HasValue || role != (int)UserEnum.Admin && role != (int)UserEnum.Staff)
@@ -226,20 +218,28 @@ namespace DDAC_Project.Controllers
                 return RedirectToAction("Login", "Auth");
             }
 
+            //get album list
             List<Album> albumPag = new List<Album>();
-            int pageSize = 15;
-            int ExcludeRecords = (pageSize * pageNumber) - pageSize;
-            HttpResponseMessage responseAlbumsPag = await this.client.GetAsync("api/album/search?type=name" + "&value=" + value);
+            
+            HttpResponseMessage responseAlbumsPag = await this.client.GetAsync("api/album/search?pageSize="+ pageSize +"&pageNumber="+ pageNumber + "&type=name" + "&value=" + value);
             if (responseAlbumsPag.IsSuccessStatusCode)
             {
                 var result = responseAlbumsPag.Content.ReadAsStringAsync().Result;
                 albumPag = JsonConvert.DeserializeObject<List<Album>>(result);
 
             }
-            ViewBag.AlbumsPag = albumPag.Skip(ExcludeRecords).Take(pageSize);
+            //get album count
+            int album_count = 0;
+            HttpResponseMessage responseAlbumsCount = await this.client.GetAsync("api/album/album_count?type=name" + "&value=" + value);
+            if (responseAlbumsCount.IsSuccessStatusCode)
+            {
+                var result =  responseAlbumsCount.Content.ReadAsStringAsync().Result;
+                album_count = Convert.ToInt32(result);
+            }
+            ViewBag.AlbumsPag = albumPag;
             ViewBag.pageNumber = pageNumber;
             ViewBag.pageSize = pageSize;
-            ViewBag.totalItems = albumPag.Count;
+            ViewBag.totalItems = album_count;
             ViewBag.Url = "Albums";
 
             var fail = TempData["fail"];
@@ -272,10 +272,18 @@ namespace DDAC_Project.Controllers
                 albumPag = JsonConvert.DeserializeObject<List<Album>>(result);
 
             }
+            //get album count
+            int album_count = 0;
+            HttpResponseMessage responseAlbumsCount = await this.client.GetAsync("api/album/album_count?type=name" + "&value=" + value);
+            if (responseAlbumsCount.IsSuccessStatusCode)
+            {
+                var result = responseAlbumsCount.Content.ReadAsStringAsync().Result;
+                album_count = Convert.ToInt32(result);
+            }
             ViewBag.AlbumsPag = albumPag.Skip(ExcludeRecords).Take(pageSize);
             ViewBag.pageNumber = pageNumber;
             ViewBag.pageSize = pageSize;
-            ViewBag.totalItems = albumPag.Count ;
+            ViewBag.totalItems = album_count;
 
             List<AlbumCategory> albumCategory = new List<AlbumCategory>();
             HttpResponseMessage res = await this.client.GetAsync("api/albumcategory");
@@ -378,19 +386,14 @@ namespace DDAC_Project.Controllers
             }
 
             //upload to s3 bucket
-            var form = new MultipartFormDataContent();
-            using (var fileStream = album.FormFile.OpenReadStream())
+            //upload new image to s3 bucket
+            var resultUploadImg = await Image.UploadImage(album.FormFile, "album", photoName);
+            if (resultUploadImg != "success")
             {
-                form.Add(new StreamContent(fileStream), "album.FormFile", photoName);
-                using (var response = await this.client.PostAsync("api/image/postImage/album", form))
-                {
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        ModelState.AddModelError("fail", await response.Content.ReadAsStringAsync());
-                        return View();
-                    }
-                }
+                ModelState.AddModelError("fail", resultUploadImg);
+                return View();
             }
+ 
 
             TempData["success"] = "Album created successfully";
                 return RedirectToAction("adminsearchalbum");
