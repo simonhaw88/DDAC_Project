@@ -26,7 +26,7 @@
     <div class="d-flex justify-content-center">
         <div class="insight-card border-end">
             <p class="text-center fw-bold p-3 fs-5">Total Sales</p>
-            <p class="text-center fw-bold fs-1 total-sales">RM @ViewBag.TotalSales</p>
+            <p class="text-center fw-bold fs-1 total-sales">RM @ViewBag.TotalSales.ToString("0.00")</p>
         </div>
         <div class="insight-card border-end">
             <p class="text-center fw-bold p-3 fs-5">Total Orders (Paid)</p>
@@ -74,9 +74,9 @@
                     }
                     <tr>
                         <th scope="row">@order.OrderId</th>
-                        <td>@order.OrderItems[0].Album.Name</td>
+                        <td>@(order.OrderItems.Count != 0 ? order.OrderItems[0].Album.Name : "")</td>
                         <td>@totalQuantity</td>
-                        <td>RM @amount</td>
+                        <td>RM @amount.ToString("0.00")</td>
                         <td>@order.CreatedDate.ToString("yyyy-MM-dd")</td>
                         <td>@(order.Status == 1 ? "Unpaid" : order.Status == 2 ? "Paid" : order.Status == 3 ? "Shipped" : order.Status == 4 ? "Completed" : order.Status == 5 ? "Cancelled" : "Unknown")</td>
                         <td>

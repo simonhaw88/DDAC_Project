@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DDAC_API.Migrations
 {
-    public partial class vcw : Migration
+    public partial class soundmartDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -295,30 +295,6 @@ namespace DDAC_API.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Payment",
-                columns: table => new
-                {
-                    PaymentId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CardOwnerName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CardNumber = table.Column<long>(type: "bigint", nullable: false),
-                    ExpirationMonth = table.Column<int>(type: "int", nullable: false),
-                    ExpirationYear = table.Column<int>(type: "int", nullable: false),
-                    CVV = table.Column<int>(type: "int", nullable: false),
-                    OrderId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Payment", x => x.PaymentId);
-                    table.ForeignKey(
-                        name: "FK_Payment_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
-                        principalColumn: "OrderId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.InsertData(
                 table: "Address",
                 columns: new[] { "AddressId", "City", "Country", "Line", "PostCode", "Region" },
@@ -349,7 +325,7 @@ namespace DDAC_API.Migrations
             migrationBuilder.InsertData(
                 table: "Admins",
                 columns: new[] { "AdminId", "AddressId", "ContactNo", "DateOfBirth", "FirstName", "Gender", "LastName", "UserId" },
-                values: new object[] { 1, 1, 1699885450, new DateTime(2021, 11, 5, 0, 0, 0, 0, DateTimeKind.Local), "simon", 1, "Haw", 1 });
+                values: new object[] { 1, 1, 1699885450, new DateTime(2021, 11, 6, 0, 0, 0, 0, DateTimeKind.Local), "simon", 1, "Haw", 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Admins_AddressId",
@@ -409,12 +385,6 @@ namespace DDAC_API.Migrations
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Payment_OrderId",
-                table: "Payment",
-                column: "OrderId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Staffs_AddressId",
                 table: "Staffs",
                 column: "AddressId");
@@ -444,9 +414,6 @@ namespace DDAC_API.Migrations
 
             migrationBuilder.DropTable(
                 name: "OrderItems");
-
-            migrationBuilder.DropTable(
-                name: "Payment");
 
             migrationBuilder.DropTable(
                 name: "Staffs");

@@ -1,10 +1,19 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 
 namespace DDAC_Project.Models
 {
     public class Customer
-    { 
+    {
+        public Customer()
+        {
+            FirstName = null;
+            LastName = null;
+            ContactNo = 0;
+            DateOfBirth = DateTime.ParseExact("1999-11-11", "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            Gender = 1;
+        }
         public int CustomerId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

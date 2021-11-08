@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 
 namespace DDAC_API.Models
 {
@@ -10,7 +11,7 @@ namespace DDAC_API.Models
             FirstName = null;
             LastName = null;
             ContactNo = 0;
-            DateOfBirth = DateTime.Today;
+            DateOfBirth = DateTime.ParseExact("1999-11-11", "yyyy-MM-dd", CultureInfo.InvariantCulture);
             Gender = 1;
         }
         public int CustomerId { get; set; }

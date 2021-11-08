@@ -145,7 +145,7 @@
                                                     <b>Gender:</b>
                                                 </div>
                                                 <div class="col ">
-                                                    @(user.Staff.Gender == null ? "-" : user.Staff.Gender)
+                                                    @(user.Staff.Gender.ToString() == null ? "-" : user.Staff.Gender == 1 ? "Male" : "Female")
                                                 </div>
                                             </div>
 

@@ -39,7 +39,7 @@
 
             <div class="form-group mt-2 mb-2">
                 @Html.LabelFor(m => m.Admin.Gender, new { @class = "fw-bold fs-6" })
-                <select class="form-control border border-dark mt-1 shadow" name="Gender">
+                <select class="form-control border border-dark mt-1 shadow" name="Admin.Gender">
                     @if (Model.Admin.Gender == 1)
                     {
                         <option value="1" selected>Male</option>

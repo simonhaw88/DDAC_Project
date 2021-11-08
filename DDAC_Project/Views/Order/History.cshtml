@@ -83,10 +83,10 @@
                     
                     <tr>
                         <th scope="row">
-                            <img alt="100%x280" class="order-img" src=@(ViewBag.imgBaseUrl+"album/"+ Uri.EscapeDataString(order.OrderItems[0].Album.AlbumPhotos[0].Name))>
+                            <img alt="100%x280" class="order-img" src=@(order.OrderItems.Count != 0 ? ViewBag.imgBaseUrl+"album/"+ Uri.EscapeDataString(order.OrderItems[0].Album.AlbumPhotos[0].Name): "")>
                         </th>
                         <td class="order-product">
-                            <p class="order-product pt-3 product-name-wrap text--overflow">@order.OrderItems[0].Album.Name</p>
+                            <p class="order-product pt-3 product-name-wrap text--overflow">@(order.OrderItems.Count != 0 ? order.OrderItems[0].Album.Name : "")</p>
                         </td>
                         <td class="order-quantity">
                             <p class="order-quantity pt-4">X @totalQuantity</p>

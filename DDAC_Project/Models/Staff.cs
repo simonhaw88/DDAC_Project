@@ -2,11 +2,20 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 
 namespace DDAC_Project.Models
 {
     public class Staff
     {
+        public Staff()
+        {
+            FirstName = null;
+            LastName = null;
+            ContactNo = 0;
+            DateOfBirth = DateTime.ParseExact("1999-11-11", "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            Gender = 1;
+        }
         public int StaffId { get; set; }
         [Required(ErrorMessage = "FirstName is required")]
         [DisplayName("First Name")]

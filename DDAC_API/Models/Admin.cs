@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,8 +14,8 @@ namespace DDAC_API.Models
             FirstName = null;
             LastName = null;
             ContactNo = 0;
-            DateOfBirth = DateTime.Today;
-            Gender = 0;
+            DateOfBirth = DateTime.ParseExact("1999-11-11", "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            Gender = 1;
         }
         public int AdminId { get; set; }
         public string FirstName { get; set; }

@@ -65,7 +65,8 @@
                                                         }
                                                         <div class="col-md-3 mb-3">
                                                             <div class="card" style="width:280px;height:430px;">
-                                                                <img class="img-fluid" style="width:280px; height:280px;" alt="100%x280" src=@(ViewBag.imgBaseUrl+"album/"+ album.AlbumPhotos[0].Name)>
+                                                                <img class="img-fluid" style="width:280px; height:280px;" alt="100%x280" 
+                                                                     src=@(ViewBag.imgBaseUrl+"album/"+ album.AlbumPhotos[0].Name)>
                                                                 <div class="card-body">
                                                                     <h6 class="card-title text--overflow">@album.Name</h6>
                                                                     <h7 class="card-text text-muted">@("By: " + album.Author)</h7><br />

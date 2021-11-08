@@ -100,7 +100,7 @@ namespace DDAC_API.Migrations
                             AdminId = 1,
                             AddressId = 1,
                             ContactNo = 1699885450,
-                            DateOfBirth = new DateTime(2021, 11, 5, 0, 0, 0, 0, DateTimeKind.Local),
+                            DateOfBirth = new DateTime(2021, 11, 6, 0, 0, 0, 0, DateTimeKind.Local),
                             FirstName = "simon",
                             Gender = 1,
                             LastName = "Haw",
@@ -365,39 +365,6 @@ namespace DDAC_API.Migrations
                     b.ToTable("OrderItems");
                 });
 
-            modelBuilder.Entity("DDAC_API.Models.Payment", b =>
-                {
-                    b.Property<int>("PaymentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CVV")
-                        .HasColumnType("int");
-
-                    b.Property<long>("CardNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("CardOwnerName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ExpirationMonth")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ExpirationYear")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.HasKey("PaymentId");
-
-                    b.HasIndex("OrderId")
-                        .IsUnique();
-
-                    b.ToTable("Payment");
-                });
-
             modelBuilder.Entity("DDAC_API.Models.Staff", b =>
                 {
                     b.Property<int>("StaffId")
@@ -601,17 +568,6 @@ namespace DDAC_API.Migrations
                     b.Navigation("Order");
                 });
 
-            modelBuilder.Entity("DDAC_API.Models.Payment", b =>
-                {
-                    b.HasOne("DDAC_API.Models.Order", "Order")
-                        .WithOne("Payment")
-                        .HasForeignKey("DDAC_API.Models.Payment", "OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-                });
-
             modelBuilder.Entity("DDAC_API.Models.Staff", b =>
                 {
                     b.HasOne("DDAC_API.Models.Address", "Address")
@@ -652,8 +608,6 @@ namespace DDAC_API.Migrations
             modelBuilder.Entity("DDAC_API.Models.Order", b =>
                 {
                     b.Navigation("OrderItems");
-
-                    b.Navigation("Payment");
                 });
 
             modelBuilder.Entity("DDAC_API.Models.User", b =>

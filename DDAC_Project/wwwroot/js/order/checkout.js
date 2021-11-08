@@ -45,8 +45,8 @@
             var quantity = $(this).parent().parent().find(".order-quantity").find("p").data("value");
             sum_amount = sum_amount + (price * quantity);
         });
-        
-            $(".total_amount").text("RM " + sum_amount);
+
+        $(".total_amount").text("RM " + sum_amount.toFixed(2));
             $("#total_item").text(count_items);
         
     }
